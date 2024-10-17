@@ -52,15 +52,35 @@
         <li class="main_nav_item"><a href="{% url 'about' %}">About Us</a></li>
         <li class="main_nav_item"><a href="{% url 'offers' %}">Check Route</a></li>
         <li class="main_nav_item"><a href="{% url 'comment' %}">Comment</a></li>
-    <li class="main_nav_item" style="display: inline;">
+<li class="main_nav_item" style="display: inline;">
     <form action="{% url 'changebuses' %}" method="post" id="search_form_1" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
-    {% csrf_token %}
-    <button type="submit">🔔<span style="color: red;"><b>{{buschanges_count}}</b></span></button>
-    </br>
-    <input type="date" name="date" placeholder="Date" required>
-</form>
-<li></ul>
+        {% csrf_token %}
+        <button type="button" id="notificationButton" style="background: none; border: none; cursor: pointer;">
+            🔔<span style="color: red;"><b>{{ buschanges_count }}</b></span>
+        </button>
+        <br>
+        <input type="date" name="date" placeholder="Date" required id="dateInput" style="display: none; margin-left: 10px; width: 120px; background-color: #ffebcd; border: 1px solid #ffa07a; border-radius: 4px; padding: 3px;">
+    </form>
+</li>
 
+<script>
+    document.getElementById('notificationButton').addEventListener('click', function() {
+        var dateInput = document.getElementById('dateInput');
+        
+        // Toggle visibility of date input
+        if (dateInput.style.display === 'none') {
+            dateInput.style.display = 'inline-block';  // Show the date input
+            dateInput.focus(); // Focus on the date input when shown
+        } else {
+            dateInput.style.display = 'none';  // Hide the date input
+        }
+    });
+
+    document.getElementById('dateInput').addEventListener('change', function() {
+        // Automatically submit the form when a date is selected
+        document.getElementById('search_form_1').submit();
+    });
+</script>
 
 
 
@@ -119,8 +139,6 @@
 		</div>
 	</div>
 	</br></br></br>
-	<!--<div class="home" style="width: 100%; margin-left: 30px; margin-right: 20px;">-->
-	<!--<div class="home" style="width: 86%; margin-left: 90px; height: 30;">-->
 	<div class="home">
 		<div class="home_slider_container">
 			<div class="owl-carousel owl-theme home_slider">
@@ -300,11 +318,119 @@
 -->
 
 
+
 <div class="search8">
     <div class="search_panel active">
         <form action="http://127.0.0.1:8000/get_route/" method="post" id="search_form_1" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
             {% csrf_token %}
             
+            <div class="search_item">
+                <label for="depcity" class="text-blue font-weight-bold">From</label>
+                <select name="depcity" id="depcity" class="form-control" style="width: auto; display: inline-block; margin-left: 10px;" required>
+                    <option value="" style="color: green; font-weight: bold;">Select Departure</option>
+                    {% if des %}
+                        {% for depcity in des %}
+                            <option value="{{ depcity.depcity }}" style="color: blue; font-weight: bold;">{{ depcity.depcity }}</option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+            </div>
+
+            <div class="search_item">
+                <label for="descity" class="text-blue font-weight-bold">To</label>
+                <select name="descity" id="descity" class="form-control" style="width: auto; display: inline-block; margin-left: 10px;" required>
+                    <option value="" style="color: green; font-weight: bold;">Select Destination</option>
+                    {% if des %}
+                        {% for depcity in des %}
+                            <option value="{{ depcity.depcity }}" style="color: blue; font-weight: bold;">{{ depcity.depcity }}</option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+            </div>
+            <div class="search_item">
+                <label for="date" class="text-blue font-weight-bold">Date</label>
+                <input type="date" name="date" id="date" class="form-control" style="margin-left: 10px; width: auto; display: inline-block;" required>
+            </div>
+            <div class="search_item">
+                <button class="btn btn-primary" type="submit" style="margin-left: 20px;">
+                    Check
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<!--
+<div class="search8" style="border: 1px solid #ccc; padding: 20px; border-radius: 8px; display: flex; flex-wrap: wrap; gap: 10px;">
+    <div class="search_panel active" style="width: 100%;">
+        <form action="http://127.0.0.1:8000/get_route/" method="post" id="search_form_1" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
+            {% csrf_token %}
+
+            <div class="search_item">
+                <label for="depcity" class="text-blue font-weight-bold">From</label>
+                <select name="depcity" id="depcity" class="form-control" required>
+                    <option value="" style="color: green; font-weight: bold;">Select Departure</option>
+                    {% if des %}
+                        {% for depcity in des %}
+                            <option value="{{ depcity.depcity }}" style="color: blue; font-weight: bold;">{{ depcity.depcity }}</option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+            </div>
+
+            <div class="search_item">
+                <label for="descity" class="text-blue font-weight-bold">To</label>
+                <select name="descity" id="descity" class="form-control" required>
+                    <option value="" style="color: green; font-weight: bold;">Select Destination</option>
+                    {% if des %}
+                        {% for depcity in des %}
+                            <option value="{{ depcity.depcity }}" style="color: blue; font-weight: bold;">{{ depcity.depcity }}</option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+            </div>
+
+            <div class="search_item">
+                <label for="date" class="text-blue font-weight-bold">Date</label>
+                <input type="date" name="date" id="date" class="form-control" required>
+            </div>
+
+            <div class="search_item">
+                <button class="btn btn-primary" type="submit">
+                    Check
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+<div class="search8" style="background-color: #f8f9fa; border: 1px solid #ccc; padding: 20px; border-radius: 8px;">
+    <div class="search_panel active">
+        <form action="http://127.0.0.1:8000/get_route/" method="post" id="search_form_1" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
+            {% csrf_token %}
+
             <div class="search_item">
                 <label for="depcity" class="text-blue font-weight-bold">From</label>
                 <select name="depcity" id="depcity" class="form-control" style="width: auto; display: inline-block; margin-left: 10px;" required>
@@ -342,6 +468,8 @@
         </form>
     </div>
 </div>
+-->
+
 
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">

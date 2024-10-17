@@ -155,7 +155,46 @@ class Admin(models.Model):
         return f"{self.username} - {self.fname} - {self.lname} - {self.gender} - {self.password} - {self.phone}"
 
 
+import uuid
+from django.db import models
+from django.utils import timezone
 
+class Ticket(models.Model):
+    # Unique ticket ID
+    ticket_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+
+    firstname = models.CharField(max_length=50, null=True, blank=True)
+    lastname = models.CharField(max_length=50, null=True, blank=True)
+    phone = models.CharField(max_length=50, null=True, blank=True)
+    depcity = models.CharField(max_length=50, null=True, blank=True)
+    descity = models.CharField(max_length=50, null=True, blank=True)
+    date = models.CharField(max_length=50, null=True, blank=True)
+    no_seat = models.CharField(max_length=20, null=True, blank=True)
+    price = models.CharField(max_length=50, null=True, blank=True)
+    side_no = models.CharField(max_length=20, null=True, blank=True)
+    plate_no = models.CharField(max_length=20, null=True, blank=True)
+    
+    # Automatically set booking time
+    booked_time = models.DateTimeField(default=timezone.now)
+
+    groups = models.ManyToManyField(
+        'auth.Group',
+        related_name='ticket_set',
+        blank=True
+    )
+    worker_permissions = models.ManyToManyField(
+        'auth.Permission',
+        related_name='ticket_permissions_set',
+        blank=True
+    )
+
+    def __str__(self):
+        return f"{self.firstname} - {self.phone} - {self.lastname} - {self.price}, {self.descity} - {self.depcity} - {self.no_seat} - {self.plate_no} - {self.side_no} - {self.date}, ID: {self.ticket_id}"
+
+
+
+
+"""
 class Ticket(models.Model):
     firstname = models.CharField(max_length=50, null=True, blank=True)
     lastname = models.CharField(max_length=50, null=True, blank=True)
@@ -180,7 +219,7 @@ class Ticket(models.Model):
     )
     def __str__(self):
         return f"{self.firstname} - {self.phone}, {self.lastname} - {self.price}, {self.descity} - {self.depcity} {self.no_seat} - {self.plate_no} - {self.side_no} - {self.date}"
-
+"""
 
 
 

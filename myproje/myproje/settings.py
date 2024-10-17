@@ -435,13 +435,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'your-default-secret-key')
 
-DEBUG = False
-
+DEBUG = True
+"""
 ALLOWED_HOSTS = [
     'users.onrender.com',
     'www.yourdomain.com',
     'yourdomain.com',
 ]
+"""
+ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
