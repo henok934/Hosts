@@ -437,14 +437,12 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'your-default-secret-key')
 
 DEBUG = False  # Set to False for production
 
-"""
 ALLOWED_HOSTS = [
     'users.onrender.com',
     'www.yourdomain.com',
     'yourdomain.com',
 ]
-"""
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']  # Update for production
+#ALLOWED_HOSTS = ['127.0.0.1', 'localhost']  # Update for production
 
 
 AUTH_USER_MODEL = 'users.CustomUser'
