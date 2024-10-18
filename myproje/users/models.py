@@ -1,8 +1,10 @@
 # users/models.py
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+import uuid
 
 class CustomUser(AbstractUser):
+    #id = models.UUIDField(default=uuid.uuid4, primary_key=True, unique=True)
     fname = models.CharField(max_length=50, null=True, blank=True)
     lname = models.CharField(max_length=50, null=True, blank=True)
     gender = models.CharField(max_length=20, null=True, blank=True)
@@ -18,18 +20,16 @@ class CustomUser(AbstractUser):
         related_name='customuser_permissions_set',
         blank=True
     )
-
     def __str__(self):
         return f"{self.username} - {self.email} - {self.fname} - {self.lname} - {self.gender} - {self.phone}"
 
-
 class Fedback(models.Model):
+    #id = models.UUIDField(default=uuid.uuid4, primary_key=True, unique=True)
     name = models.CharField(max_length=50, null=True, blank=True)
     email = models.CharField(max_length=50, null=True, blank=True)
     phone = models.CharField(max_length=50, null=True, blank=True)
     message = models.CharField(max_length=50, null=True, blank=True)
 
-    # Adding unique related_name
     groups = models.ManyToManyField(
         'auth.Group',
         related_name='fedback_set',  # Unique related name
@@ -46,6 +46,7 @@ class Fedback(models.Model):
 
 
 class Bus(models.Model):
+    #id = models.UUIDField(default=uuid.uuid4, primary_key=True, unique=True)
     plate_no = models.CharField(max_length=50, null=True, blank=True)
     sideno = models.CharField(max_length=50, null=True, blank=True)
     no_seats = models.CharField(max_length=50, null=True, blank=False)
@@ -66,6 +67,7 @@ class Bus(models.Model):
         return f"{self.plate_no} - {self.sideno} - {self.no_seats}"    
 
 class City(models.Model):
+    #id = models.UUIDField(default=uuid.uuid4, primary_key=True, unique=True)
     depcity = models.CharField(max_length=50, null=True, blank=True)
     # Adding unique related_name
     groups = models.ManyToManyField(
@@ -82,6 +84,7 @@ class City(models.Model):
         return f"{self.depcity}"
 
 class Route(models.Model):
+    #id = models.UUIDField(default=uuid.uuid4, primary_key=True, unique=True)
     depcity = models.CharField(max_length=50, null=True, blank=True)
     descity = models.CharField(max_length=50, null=True, blank=True)
     kilometer = models.CharField(max_length=50, null=True, blank=True)
@@ -102,11 +105,8 @@ class Route(models.Model):
     def __str__(self):
         return f"{self.depcity} - {self.descity}, {self.plate_no} - {self.side_no} - {self.kilometer} - {self.price} - {self.date}"
 
-
-
-
-
 class Worker(models.Model):
+    #id = models.UUIDField(default=uuid.uuid4, primary_key=True, unique=True)
     fname = models.CharField(max_length=50, null=True, blank=True)
     lname = models.CharField(max_length=50, null=True, blank=True)
     username = models.CharField(max_length=50, unique=True, null=True, blank=True)
@@ -133,6 +133,7 @@ class Worker(models.Model):
 
 
 class Admin(models.Model):
+    #id = models.UUIDField(default=uuid.uuid4, primary_key=True, unique=True)
     fname = models.CharField(max_length=50, null=True, blank=True)
     lname = models.CharField(max_length=50, null=True, blank=True)
     username = models.CharField(max_length=50, unique=True, null=True, blank=True)
@@ -158,6 +159,7 @@ class Admin(models.Model):
 import uuid
 from django.db import models
 from django.utils import timezone
+from datetime import timedelta
 
 class Ticket(models.Model):
     # Unique ticket ID
@@ -176,6 +178,7 @@ class Ticket(models.Model):
     
     # Automatically set booking time
     booked_time = models.DateTimeField(default=timezone.now)
+    #booked_time = models.DateTimeField(default=timezone.now() + timedelta(minutes=5, seconds=30))
 
     groups = models.ManyToManyField(
         'auth.Group',
@@ -187,6 +190,9 @@ class Ticket(models.Model):
         related_name='ticket_permissions_set',
         blank=True
     )
+    def formatted_booked_time(self):
+        """Return booked_time in the format: MM,DD,YYYY HH:MM:SS"""
+        return self.booked_time.strftime('%m,%d,%Y %H:%M:%S')
 
     def __str__(self):
         return f"{self.firstname} - {self.phone} - {self.lastname} - {self.price}, {self.descity} - {self.depcity} - {self.no_seat} - {self.plate_no} - {self.side_no} - {self.date}, ID: {self.ticket_id}"
