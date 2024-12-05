@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from .models import CustomUser
-from .models import Fedback
+from .models import Feedback
 from .models import Bus
 from .models import Route
 from django.db import IntegrityError
@@ -60,80 +60,6 @@ def offers(request):
     return render(request, 'users/cheeckrout.html', context)
 
 
-
-
-
-"""
-def login(request):
-    buschanges = Buschange.objects.all()
-    buschanges_count = buschanges.count()
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        role = request.POST.get('role')
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            auth_login(request, user)  # Log the user in
-            if role == 'admin':
-                return render(request, 'users/ad.html')
-            elif role == 'worker':
-                try:
-                    worker = Worker.objects.get(username=username)
-                    routes = Route.objects.filter(side_no=worker.side_no)
-                    return render(request, 'users/rooteee.html', {'routes': routes})
-                except Worker.DoesNotExist:
-                    return render(request, 'users/login.html', {'error': 'This username Worker not found'})
-            elif role == 'user':
-                return render(request, 'users/profile.html', {'user': user})
-            else:
-                return render(request, 'users/login.html', {'error': 'Invalid role specified', 'buschanges_count': buschanges_count})
-        else:
-            return render(request, 'users/login.html', {'error': 'Invalid username or password', 'buschanges_count': buschanges_count})
-    return render(request, 'users/login.html', {'buschanges_count': buschanges_count})
-"""
-
-
-"""
-from django.contrib.auth import authenticate, login as auth_login
-from django.shortcuts import render, redirect
-from .models import Worker, Route, Buschange  # Ensure these models are imported
-
-def login(request):
-    buschanges = Buschange.objects.all()
-    buschanges_count = buschanges.count()
-
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        role = request.POST.get('role')
-
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            auth_login(request, user)  # Log the user in
-
-            if role == 'admin':
-                return render(request, 'users/ad.html')  # Use redirect to go to the ad page
-            elif role == 'worker':
-                try:
-                    worker = Worker.objects.get(username=username)
-                    routes = Route.objects.filter(side_no=worker.side_no)
-                    return render(request, 'users/rooteee.html', {'routes': routes})
-                except Worker.DoesNotExist:
-                    return render(request, 'users/login.html', {'error': 'This username Worker not found', 'buschanges_count': buschanges_count})
-            elif role == 'user':
-                return render(request, 'users/profile.html', {'user': user})
-            else:
-                return render(request, 'users/login.html', {'error': 'Invalid role specified', 'buschanges_count': buschanges_count})
-        else:
-            return render(request, 'users/login.html', {'error': 'Invalid username or password', 'buschanges_count': buschanges_count})
-
-    return render(request, 'users/login.html', {'buschanges_count': buschanges_count})
-"""
-
-
-
-
-"""
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login as auth_login
 from .models import Buschange, Worker, Route
@@ -147,67 +73,33 @@ def login(request):
         password = request.POST.get('password')
         role = request.POST.get('role')
 
-        # Use authenticate to validate user credentials
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            auth_login(request, user)  # Log the user in
-
-            if role == 'admin':
-                return render(request, 'users/ad.html')  # Redirect to the admin page
-            elif role == 'worker':
-                try:
-                    worker = Worker.objects.get(username=username)
-                    routes = Route.objects.filter(side_no=worker.side_no)
-                    return render(request, 'users/rooteee.html', {'routes': routes})
-                except Worker.DoesNotExist:
-                    return render(request, 'users/login.html', {'error': 'This username Worker not found', 'buschanges_count': buschanges_count})
-            elif role == 'user':
-                return render(request, 'users/profile.html', {'user': user})
-            else:
-                return render(request, 'users/login.html', {'error': 'Invalid role specified', 'buschanges_count': buschanges_count})
-        else:
-            # Invalid username or password
-            return render(request, 'users/login.html', {'error': 'Invalid username or password', 'buschanges_count': buschanges_count})
-
-    return render(request, 'users/login.html', {'buschanges_count': buschanges_count})
-"""
-
-
-
-from django.shortcuts import render
-from django.contrib.auth import authenticate, login as auth_login
-from .models import Buschange, Worker, Route
-
-def login(request):
-    buschanges = Buschange.objects.all()
-    buschanges_count = buschanges.count()
-
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        role = request.POST.get('role')
-
-        # Validate user credentials
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
             auth_login(request, user)  # Log the user in
 
             # Redirect based on role
-            if role == 'admin':
-                return render(request, 'users/ad.html')  # Redirect to the admin page
+            if role == 'user':
+                return render(request, 'users/profile.html', {'user': user})  # Redirect to the admin page
             elif role == 'worker':
                 try:
                     worker = Worker.objects.get(username=username)
                     routes = Route.objects.filter(side_no=worker.side_no)
                     return render(request, 'users/rooteee.html', {'routes': routes})
                 except Worker.DoesNotExist:
+            
                     return render(request, 'users/login.html', {'error': 'This username Worker not found', 'buschanges_count': buschanges_count})
+            
+
+            """
             elif role == 'user':
                 return render(request, 'users/profile.html', {'user': user})
+            
             else:
                 return render(request, 'users/login.html', {'error': 'Invalid role specified', 'buschanges_count': buschanges_count})
+            """
+
+
         else:
             # Invalid username or password
             return render(request, 'users/login.html', {'error': 'Invalid username or password', 'buschanges_count': buschanges_count})
@@ -223,13 +115,73 @@ def users(request):
     users = CustomUser.objects.all()
     return render(request, 'users/users.html',{'users': users})
 def comments(request):
-    comments = Fedback.objects.all()
+    comments = Feedback.objects.all()
     return render(request, 'users/comments.html',{'comments': comments})
 def routes(request):
     routes = Route.objects.all()
     return render(request, 'users/routes.html',{'routes': routes})
 def selectbus(request):
     return render(request, 'users/route.html')
+
+
+"""
+def ticket(request):
+    des = City.objects.all()
+    bus = Bus.objects.all()
+
+    if request.method == 'POST':
+        firstname = request.POST['firstname']
+        lastname = request.POST['lastname']
+        phone = request.POST['phone']
+        depcity = request.POST['depcity']
+        descity = request.POST['descity']
+        date = request.POST['date']
+        selected_seats = request.POST.getlist('seat_no')  # Get all selected seats
+        price = request.POST['price']  # Assuming this is the price per seat
+        side_no = request.POST['side_no']
+        plate_no = request.POST['plate_no']
+
+        # Check for existing tickets for the same person on this route
+        existing_ticket = Ticket.objects.filter(
+            firstname=firstname,
+            lastname=lastname,
+            depcity=depcity,
+            descity=descity,
+            date=date,
+            plate_no=plate_no,
+            side_no=side_no
+        ).exists()
+
+        if existing_ticket:
+            return render(request, 'users/ticket.html', {
+                'bus': bus,
+                'des': des,
+                'error': 'This person has already booked a ticket for this route.'
+            })
+
+        # Create tickets for each selected seat
+        for seat_no in selected_seats:
+            Ticket.objects.create(
+                firstname=firstname,
+                lastname=lastname,
+                phone=phone,
+                depcity=depcity,
+                descity=descity,
+                date=date,
+                no_seat=seat_no,
+                price=price,  # Assuming this is the price per seat; adjust accordingly
+                side_no=side_no,
+                plate_no=plate_no
+            )
+
+        return render(request, 'users/ticket.html', {
+            'bus': bus,
+            'des': des,
+            'success': 'Tickets booked successfully!'
+        })
+
+    return render(request, 'users/ticket.html', {'bus': bus, 'des': des})
+"""
 
 def ticket(request):
     des = City.objects.all()
@@ -245,7 +197,7 @@ def ticket(request):
         price = request.POST['price']
         side_no = request.POST['side_no']
         plate_no = request.POST['plate_no']
-        print("Received data:", request.POST)
+        #print("Received data:", request.POST)
         if no_seat == "FULL":
             return render(request, 'users/ticket.html', {
                 'bus': bus,
@@ -288,6 +240,7 @@ def ticket(request):
     return render(request, 'users/ticket.html', {'bus': bus, 'des': des})
 
 
+
 def businsert(request):
     if request.method == 'POST':
         plate_no = request.POST['plate_no']
@@ -317,7 +270,7 @@ def comment(request):
         email = request.POST['email']
         phone = request.POST['phone']
         message = request.POST['message']
-        comment = Fedback(
+        comment = Feedback(
             name=name,
             email=email,
             phone=phone,
@@ -331,6 +284,9 @@ def comment(request):
     return render(request, 'users/comment.html',{'buschanges_count':  buschanges_count})
 def get_ticket(request):
     des = City.objects.all()
+    buschanges = Buschange.objects.all()
+    buschanges_count = buschanges.count()
+
     if request.method == 'POST':
         depcity = request.POST.get('depcity')
         descity = request.POST.get('descity')
@@ -352,7 +308,7 @@ def get_ticket(request):
             return render(request, 'users/error1.html', {'error': "Try Again. Entered Firstname AND Lastname The Same!"})
         else:
             return render(request, 'users/error1.html', {'error': "Try Again. There is no Ticket Booked info for the entered details!"})
-    return render(request, 'users/getticket.html', {'des': des})
+    return render(request, 'users/getticket.html', {'des': des,'buschanges_count':buschanges_count})
 
 
 
@@ -388,46 +344,6 @@ def worker_view(request):
         )
         return render(request, 'users/worker.html', {'bus': bus, 'des': des, 'success': 'Driver registered successfully.'})
     return render(request, 'users/worker.html', {'bus': bus, 'des': des})
-
-
-
-
-
-"""
-def worker_view(request):
-    des = City.objects.all()
-    bus = Bus.objects.all()
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        phone = request.POST['phone']
-        fname = request.POST['fname']
-        lname = request.POST['lname']
-        gender = request.POST['gender']
-        plate_no = request.POST['plate_no']
-        side_no = request.POST['side_no']
-        if Worker.objects.filter(username=username).exists():
-            return render(request, 'users/worker.html', {'bus': bus, 'des': des,'error': 'Username already exists.'})
-        if Worker.objects.filter(plate_no=plate_no).exists():
-            return render(request, 'users/worker.html', {'bus': bus, 'des': des,'error': 'This bus already have Driver.'})
-        if Worker.objects.filter(phone=phone).exists():
-            return render(request, 'users/worker.html', {'bus': bus, 'des': des,'error': 'Phone already exists.'})
-        worker = Worker.objects.create(
-            username=username,
-            plate_no=plate_no,
-            side_no=side_no,
-            password=password,
-            phone=phone,
-            fname=fname,
-            lname=lname,
-            gender=gender
-        )
-        worker.save()
-        return render(request, 'users/worker.html', {'bus': bus, 'des': des,'success': 'Driver registored Successfully.'})
-    return render(request, 'users/worker.html',{'bus': bus, 'des': des})
-"""
-
-
 
 
 
@@ -513,6 +429,8 @@ def route(request):
     if request.method == 'POST':
         descity = request.POST.get('descity')
         depcity = request.POST.get('depcity')
+        print(depcity)
+        print(descity)
         date = request.POST.get('date')
         plate_no = request.POST.get('plate_no')
         side_no = request.POST.get('side_no')
@@ -521,7 +439,7 @@ def route(request):
         if depcity.strip() == descity.strip():
             return render(request, 'users/route.html', {'bus': bus, 'des': des, 'dep': dep, 'error': 'Departure and Destination cannot be the same!'})
         if Route.objects.filter(depcity=depcity, descity=descity, plate_no=plate_no, side_no=side_no, date=date).exists():
-            return render(request, 'users/route.html', {'bus': bus, 'des': des, 'dep': dep, 'error': 'This route already exists.'})
+            return render(request, 'users/route.html', {'bus': bus, 'des': des, 'dep': dep, 'error': 'route already exists.'})
         if Route.objects.filter(side_no=side_no, date=date, plate_no=plate_no).exists():
             return render(request, 'users/route.html', {'bus': bus, 'des': des, 'dep': dep, 'error': 'This bus is already reserved for another route for this date'})
 
@@ -534,6 +452,7 @@ def route(request):
             price=price,
             date=date
         )
+        print(depcity)
         if depcity.strip() == "Addisababa":
             date = timezone.datetime.strptime(date, '%Y-%m-%d') + timedelta(days=1)
             date = date.strftime('%Y-%m-%d')
@@ -561,43 +480,6 @@ def city_view(request):
         city.save()
         return render(request, 'users/city.html', {'success': 'City registored Successfully!'})
     return render(request, 'users/city.html')
-
-
-
-"""
-from django.shortcuts import render
-from django.contrib.auth.hashers import make_password
-from .models import Admin, City, Bus
-def admins(request):
-    des = City.objects.all()  # Fetch all cities
-    bus = Bus.objects.all()    # Fetch all buses
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        phone = request.POST.get('phone')
-        fname = request.POST.get('fname')
-        lname = request.POST.get('lname')
-        gender = request.POST.get('gender')
-        email = request.POST.get('email')
-        if Admin.objects.filter(username=username).exists():
-            return render(request, 'users/admin.html', {'bus': bus, 'des': des, 'error': 'Username Already Exists.'})
-        if Admin.objects.filter(email=email).exists():
-            return render(request, 'users/admin.html', {'bus': bus, 'des': des, 'error': 'This Admin already Exists.'})
-        if Admin.objects.filter(phone=phone).exists():
-            return render(request, 'users/admin.html', {'bus': bus, 'des': des, 'error': 'Phone already Exists.'})
-        admin = Admin.objects.create(
-            username=username,
-            fname=fname,
-            lname=lname,
-            password=make_password(password),  # Hash the password
-            phone=phone,
-            email=email,
-            gender=gender
-        )
-        return render(request, 'users/admin.html', {'bus': bus, 'des': des, 'success': 'Admin Created Successfully.'})
-    return render(request, 'users/admin.html', {'bus': bus, 'des': des})  # Render on GET request
-"""
-
 
 
 from django.shortcuts import render
@@ -633,10 +515,6 @@ def admins(request):
         )
         return render(request, 'users/admin.html', {'bus': bus, 'des': des, 'success': 'Admin Created Successfully.'})
     return render(request, 'users/admin.html', {'bus': bus, 'des': des})  # Render on GET request
-
-
-
-
 
 
 def ad(request):
@@ -692,6 +570,7 @@ def delete_ticket(request):
             return render(request, 'users/cheeckrouteeee.html', {'error': 'There is no route for this route', 'des':des})
     return render(request, 'users/cheeckrouteeee.html', {'des':des})
 
+"""
 def delete_tickets(request):
     if request.method == 'POST':
         date = request.POST.get('date')
@@ -700,56 +579,197 @@ def delete_tickets(request):
         firstname = request.POST.get('firstname')
         lastname = request.POST.get('lastname')
         phone = request.POST.get('phone')
-        no_seat = request.POST.get('no_seat')
+        #no_seat = request.POST.get('no_seat')
         depcity = request.POST.get('depcity')
         descity = request.POST.get('descity')
-        price = request.POST.get('price')
+        #price = request.POST.get('price')
 
         deleted_count, _ = Ticket.objects.filter(
             plate_no=plate_no,
-            side_no=side_no,
+            #side_no=side_no,
             date=date,
             firstname=firstname,
             lastname=lastname,
             phone=phone,
-            price=price,
-            no_seat=no_seat,
+            #price=price,
+            #no_seat=no_seat,
             depcity=depcity,
             descity=descity
         ).delete()
-        routes = Ticket.objects.filter(plate_no=plate_no,side_no=side_no,date=date)
+        print(depcity, descity, firstname,lastname, phone,date,depcity,descity,plate_no)
+        route = Ticket.objects.filter(depcity=depcity,descity=descity,plate_no=plate_no,date=date)
         if deleted_count > 0:
-            return render(request, 'users/deleteticket.html',{'success': 'ticket deleted successfully.', 'routes': routes})
+            return render(request, 'users/deleteticket.html',{'success': 'Ticket Deleted successfully.', 'route': route})
+
+        #else:
+        #   return render(request, 'users/error.html', {'error': 'No ticket found to delete.'})
+    return render(request, 'users/deleteticket.html', {'route': route})
+"""
+
+def delete_tickets(request):
+    if request.method == 'POST':
+        date = request.POST.get('date')
+        plate_no = request.POST.get('plate_no')
+        side_no = request.POST.get('side_no')  # Uncomment if needed
+        firstname = request.POST.get('firstname')
+        lastname = request.POST.get('lastname')
+        phone = request.POST.get('phone')
+        depcity = request.POST.get('depcity')
+        descity = request.POST.get('descity')
+
+        print(f"Attempting to delete ticket with: {date}, {plate_no}, {firstname}, {lastname}, {phone}, {depcity}, {descity}")
+
+        deleted_count, _ = Ticket.objects.filter(
+            plate_no=plate_no,
+            date=date,
+            firstname=firstname,
+            lastname=lastname,
+            phone=phone,
+            depcity=depcity,
+            descity=descity
+        ).delete()
+
+        route = Ticket.objects.filter(depcity=depcity, descity=descity, plate_no=plate_no, date=date)
+
+        if deleted_count > 0:
+            return render(request, 'users/deleteticket.html', {'success': 'Ticket Deleted successfully.', 'route': route})
         else:
-            return render(request, 'users/deleteticket.html', {'routes': routes, 'error': 'No ticket found to delete.'})
-    return render(request, 'users/deleteticket.html', {'routes': routes})
+            return render(request, 'users/deleteticket.html', {'error': 'No ticket found to delete.', 'route': route})
+
+    route = Ticket.objects.all()
+    return render(request, 'users/deleteticket.html', {'route': route})
 
 
 def delete_ticketss(request):
     if request.method == 'POST':
         date = request.POST.get('date')
         plate_no = request.POST.get('plate_no')
-        side_no = request.POST.get('side_no')
-        routes = Ticket.objects.filter(plate_no=plate_no,side_no=side_no,date=date)
-        if routes.exists():
-            return render(request, 'users/deleteticket.html', {'routes': routes})
+        depcity = request.POST.get('depcity')
+        descity = request.POST.get('descity')
+        route = Ticket.objects.filter(plate_no=plate_no,date=date,depcity=depcity,descity=descity)
+
+        routes = Route.objects.filter(date=date, depcity=depcity, descity=descity)
+        if route.exists():
+            return render(request, 'users/deleteticket.html', {'route': route})
         else:
-            return render(request, 'users/rooteeee.html',{'error': 'No routes for booked for this date'})
-    return render(request, 'users/rooteeee.html')
+            return render(request, 'users/rooteeee.html',{'error': 'No booked tickets for this travel', 'routes': routes})
+    return render(request, 'users/rooteeee.html', {'routes': routes})
 
 
 def Selectbus(request):
     if request.method == 'POST':
         date = request.POST.get('date')
         plate_no = request.POST.get('plate_no')
-        side_no = request.POST.get('side_no')
-        routes = Ticket.objects.filter(plate_no=plate_no, side_no=side_no, date=date) 
-        if routes.exists():
-            return render(request, 'users/ticketoch.html', {'routes': routes})
+        depcity = request.POST.get('depcity')
+        descity = request.POST.get('descity')
+        route = Ticket.objects.filter(plate_no=plate_no, date=date,depcity=depcity,descity=descity)
+
+        routes = Route.objects.filter(date=date, depcity=depcity, descity=descity)
+        if route.exists():
+            return render(request, 'users/ticketoch.html', {'route': route})
+        else:
+            return render(request, 'users/rootee.html',{'error': 'No booked tickets for this travel', 'routes': routes})
+
     return render(request, 'users/rootee.html')
 
 
+from django.shortcuts import render
+from .models import City, Route, Bus, Ticket  # Adjust based on your actual model imports
+def book(request):
+    buschanges = Buschange.objects.all()
+    buschanges_count = buschanges.count()
 
+    des = City.objects.all()
+    if request.method == 'POST':
+        date = request.POST.get('date')
+        depcity = request.POST.get('depcity')
+        descity = request.POST.get('descity')
+        rout = Route.objects.filter(depcity=depcity, descity=descity, date=date)
+        routes = []
+
+        if rout.exists():
+            for route in rout:
+                try:
+                    bus = Bus.objects.get(plate_no=route.plate_no)
+                    total_seats = int(bus.no_seats)  # Ensure total_seats is an integer
+                except Bus.DoesNotExist:
+                    total_seats = 0
+
+                booked_tickets = Ticket.objects.filter(
+                    depcity=route.depcity,
+                    descity=route.descity,
+                    date=route.date,
+                    plate_no=route.plate_no
+                ).count()
+                remaining_seats = max(0, total_seats - booked_tickets)
+                if remaining_seats == 0:
+                    remaining_seats = "Full"
+                routes.append({
+                    'route': route,
+                    'remaining_seats': remaining_seats
+                }) 
+            return render(request, 'users/roote.html', {'routes': routes, 'buschanges_count': buschanges_count})
+        else:
+            return render(request, 'users/cheeckroutee.html', {'des': des,'buschanges_count': buschanges_count, 'error': "There is no Travel for this  information!"})
+    return render(request, 'users/cheeckroutee.html', {'des': des, 'buschanges_count': buschanges_count})
+
+
+
+
+def Select(request):
+    buschanges = Buschange.objects.all()
+    buschanges_count = buschanges.count()
+    if request.method == 'POST':
+        plate_no = request.POST.get('plate_no')
+        depcity = request.POST.get('depcity')
+        descity = request.POST.get('descity')
+        date = request.POST.get('date')
+
+        routes = Route.objects.filter(depcity=depcity, descity=descity, date=date,plate_no=plate_no)
+        route_info = []
+        bus_full = False
+        for route in routes:
+            try:
+                bus = Bus.objects.get(plate_no=route.plate_no)
+                total_seats = int(bus.no_seats)
+
+                booked_tickets = Ticket.objects.filter(
+                    depcity=route.depcity,
+                    descity=route.descity,
+                    date=route.date,
+                    plate_no=route.plate_no
+                ).values_list('no_seat', flat=True)
+                booked_seats = set(int(seat) for seat in booked_tickets)
+                booked_seat_count = len(booked_seats)        
+                remaining_seats = total_seats - booked_seat_count
+                unbooked_seats = [seat for seat in range(1, total_seats + 1) if seat not in booked_seats]
+                if route.plate_no == plate_no and remaining_seats <= 0:
+                    bus_full = True
+                    route_info.append({
+                    'route': route,
+                    'remaining_seats': remaining_seats if remaining_seats > 0 else "Full"
+                    })
+            except Bus.DoesNotExist:
+                continue
+        route = Route.objects.filter(depcity=depcity, descity=descity, date=date)
+        if bus_full:
+            return render(request, 'users/roote.html', {
+            'error': 'This Bus is Full!',
+            'routes': route,'buschanges_count': buschanges_count})
+        routes = Route.objects.filter(depcity=depcity, descity=descity, date=date,plate_no=plate_no)
+        all_seats = list(range(1, total_seats + 1))  # Generate all seat numbers
+        return render(request, 'users/ticket.html', {
+            'routes': routes, 'remaining_seats': len(unbooked_seats),
+            'buschanges_count': buschanges_count,
+            'unbooked_seats': unbooked_seats, 'booked_seats': booked_seats, 'all_seats':  all_seats
+        })
+
+    return render(request, 'users/roote.html', {})
+
+
+
+
+"""
 from django.shortcuts import render
 from .models import City, Route, Bus, Ticket  # Adjust based on your actual model imports
 
@@ -776,10 +796,465 @@ def book(request):
                     date=route.date,
                     plate_no=route.plate_no
                 ).count()
+                
+                remaining_seats = max(0, total_seats - booked_tickets)
+                if remaining_seats == 0:
+                    remaining_seats = "Full"
+                
+                routes.append({
+                    'route': route,
+                    'remaining_seats': remaining_seats
+                })
 
+            return render(request, 'users/roote.html', {'routes': routes, 'success': "Routes info---"})
+        else:
+            return render(request, 'users/cheeckroutee.html', {'des': des, 'error': "There is no Travel for this information!"})
+    
+    return render(request, 'users/cheeckroutee.html', {'des': des})
+
+
+
+def Select(request):
+    if request.method == 'POST':
+        plate_no = request.POST.get('plate_no')
+        depcity = request.POST.get('depcity')
+        descity = request.POST.get('descity')
+        date = request.POST.get('date')
+
+        routes = Route.objects.filter(depcity=depcity, descity=descity, date=date, plate_no=plate_no)
+        route_info = []
+        bus_full = False
+        total_seats = 0  # Initialize total_seats
+
+        for route in routes:
+            try:
+                bus = Bus.objects.get(plate_no=route.plate_no)
+                total_seats = int(bus.no_seats)
+
+                booked_tickets = Ticket.objects.filter(
+                    depcity=route.depcity,
+                    descity=route.descity,
+                    date=route.date,
+                    plate_no=route.plate_no
+                ).values_list('no_seat', flat=True)
+                booked_seats = set(int(seat) for seat in booked_tickets)
+                booked_seat_count = len(booked_seats)
+                remaining_seats = total_seats - booked_seat_count
+
+                if remaining_seats <= 0:
+                    bus_full = True
+
+                route_info.append({
+                    'route': route,
+                    'remaining_seats': remaining_seats if remaining_seats > 0 else "Full"
+                })
+
+            except Bus.DoesNotExist:
+                continue
+
+        # Return the appropriate response based on bus_full status
+        if bus_full:
+            return render(request, 'users/roote.html', {
+                'error': 'This Bus is Full!',
+                'routes': route_info  # Pass the same routes for display
+            })
+
+        all_seats = list(range(1, total_seats + 1))  # Generate all seat numbers
+        unbooked_seats = [seat for seat in all_seats if seat not in booked_seats]
+
+        return render(request, 'users/ticket.html', {
+            'routes': route_info,
+            'remaining_seats': len(unbooked_seats),
+            'unbooked_seats': unbooked_seats,
+            'booked_seats': booked_seats,
+            'all_seats': all_seats
+        })
+    return render(request, 'users/roote.html', {})
+"""
+
+
+
+
+
+
+
+
+
+
+
+"""
+def Select(request):
+    if request.method == 'POST':
+        plate_no = request.POST.get('plate_no')
+        depcity = request.POST.get('depcity')
+        descity = request.POST.get('descity')
+        date = request.POST.get('date')
+
+        # Fetch all routes based on depcity, descity, and date
+        routes = Route.objects.filter(depcity=depcity, descity=descity, date=date)
+        route_info = []
+        bus_full = False
+
+        for route in routes:
+            try:
+                bus = Bus.objects.get(plate_no=route.plate_no)
+                total_seats = int(bus.no_seats)
+
+                booked_tickets = Ticket.objects.filter(
+                    depcity=route.depcity,
+                    descity=route.descity,
+                    date=route.date,
+                    plate_no=route.plate_no
+                ).values_list('no_seat', flat=True)
+
+                booked_seats = set(int(seat) for seat in booked_tickets)
+                booked_seat_count = len(booked_seats)
+                remaining_seats = total_seats - booked_seat_count
+                unbooked_seats = [seat for seat in range(1, total_seats + 1) if seat not in booked_seats]
+
+                # Check if the bus is full
+                if remaining_seats <= 0:
+                    bus_full = True
+
+                # Append route info regardless of bus fullness
+                route_info.append({
+                    'route': route,
+                    'remaining_seats': remaining_seats if remaining_seats > 0 else "Full"
+                })
+            except Bus.DoesNotExist:
+                continue
+
+        # Render the template with all route information
+        return render(request, 'users/ticket.html', {
+            'routes': route_info,
+            'bus_full': bus_full,  # Indicate if any bus is full
+            'total_routes': len(route_info)  # Total number of routes found
+        })
+    return render(request, 'users/roote.html', {})
+"""
+
+
+
+
+
+
+"""
+def calculate_seat_info(route):
+    try:
+        bus = Bus.objects.get(plate_no=route.plate_no)
+        total_seats = int(bus.no_seats)
+
+        booked_tickets = Ticket.objects.filter(
+            depcity=route.depcity,
+            descity=route.descity,
+            date=route.date,
+            plate_no=route.plate_no
+        ).values_list('no_seat', flat=True)        
+        booked_seats = set(int(seat) for seat in booked_tickets)
+        booked_seat_count = len(booked_seats)
+        remaining_seats = total_seats - booked_seat_count
+        unbooked_seats = [seat for seat in range(1, total_seats + 1) if seat not in booked_seats]
+
+        return total_seats, booked_seats, remaining_seats, unbooked_seats
+
+    except Bus.DoesNotExist:
+        return 0, set(), 0, []  # Default values if no bus found
+def Select(request):
+    if request.method == 'POST':
+        plate_no = request.POST.get('plate_no')
+        depcity = request.POST.get('depcity')
+        descity = request.POST.get('descity')
+        date = request.POST.get('date')
+
+        routes = Route.objects.filter(depcity=depcity, descity=descity, date=date)
+        route_info = []
+        bus_full = False
+        total_seats = 0  # Initialize total_seats
+
+        for route in routes:
+            total_seats, booked_seats, remaining_seats, unbooked_seats = calculate_seat_info(route)
+
+            if route.plate_no == plate_no and remaining_seats <= 0:
+                bus_full = True
+
+            route_info.append({
+                'route': route,
+                'remaining_seats': remaining_seats if remaining_seats > 0 else "Full"
+            })
+        if bus_full:
+            return render(request, 'users/roote.html', {
+                'error': 'This Bus is Full!',
+                'routes': route_info
+            })
+        if total_seats > 0:
+            routes = Route.objects.filter(depcity=depcity, descity=descity, date=date, plate_no=plate_no)
+            all_seats = list(range(1, total_seats + 1))  # Generate all seat numbers
+            return render(request, 'users/ticket.html', {
+                'routes': routes,
+                'remaining_seats': len(unbooked_seats),
+                'unbooked_seats': unbooked_seats,
+                'booked_seats': booked_seats,
+                'all_seats': all_seats
+            })
+    return render(request, 'users/roote.html', {})
+"""
+
+
+
+
+
+
+
+"""
+def Select(request):
+    if request.method == 'POST':
+        plate_no = request.POST.get('plate_no')
+        depcity = request.POST.get('depcity')
+        descity = request.POST.get('descity')
+        date = request.POST.get('date')
+
+        routes = Route.objects.filter(depcity=depcity, descity=descity, date=date)
+        route_info = []
+        bus_full = False
+        total_seats = 0  # Initialize total_seats
+
+        for route in routes:
+            try:
+                bus = Bus.objects.get(plate_no=route.plate_no)
+                total_seats = int(bus.no_seats)
+
+                booked_tickets = Ticket.objects.filter(
+                    depcity=route.depcity,
+                    descity=route.descity,
+                    date=route.date,
+                    plate_no=route.plate_no
+                ).values_list('no_seat', flat=True)
+                booked_seats = set(int(seat) for seat in booked_tickets)
+                booked_seat_count = len(booked_seats)        
+                remaining_seats = total_seats - booked_seat_count
+                unbooked_seats = [seat for seat in range(1, total_seats + 1) if seat not in booked_seats]
+
+                if route.plate_no == plate_no and remaining_seats <= 0:
+                    bus_full = True
+
+                route_info.append({
+                    'route': route,
+                    'remaining_seats': remaining_seats if remaining_seats > 0 else "Full"
+                })
+            except Bus.DoesNotExist:
+                continue
+        
+        if bus_full:
+            return render(request, 'users/roote.html', {
+                'error': 'This Bus is Full!',
+                'routes': route_info
+            })
+
+        if total_seats > 0:
+             for route in routes:
+                try:
+                    bus = Bus.objects.get(plate_no=route.plate_no)
+                    total_seats = int(bus.no_seats)
+
+                    booked_tickets = Ticket.objects.filter(
+                    depcity=route.depcity,
+                    descity=route.descity,
+                    date=route.date,
+                    plate_no=route.plate_no
+                ).values_list('no_seat', flat=True)
+                booked_seats = set(int(seat) for seat in booked_tickets)
+                booked_seat_count = len(booked_seats)
+                remaining_seats = total_seats - booked_seat_count
+                unbooked_seats = [seat for seat in range(1, total_seats + 1) if seat not in booked_seats]
+            routes = Route.objects.filter(depcity=depcity, descity=descity, date=date, plate_no=plate_no)
+            all_seats = list(range(1, total_seats + 1))  # Generate all seat numbers
+            return render(request, 'users/ticket.html', {
+                'routes': routes,
+                'remaining_seats': len(unbooked_seats),
+                'unbooked_seats': unbooked_seats,
+                'booked_seats': booked_seats,
+                'all_seats': all_seats
+            })
+    return render(request, 'users/roote.html', {})
+
+"""
+
+
+
+
+
+
+
+
+"""
+def Select(request):
+    if request.method == 'POST':
+        plate_no = request.POST.get('plate_no')
+        depcity = request.POST.get('depcity')
+        descity = request.POST.get('descity')
+        date = request.POST.get('date')
+
+        routes = Route.objects.filter(depcity=depcity, descity=descity, date=date)
+
+        route_info = []
+        bus_full = False
+
+        for route in routes:
+            try:
+                bus = Bus.objects.get(plate_no=route.plate_no)
+                total_seats = int(bus.no_seats)
+
+                booked_tickets = Ticket.objects.filter(
+                    depcity=route.depcity,
+                    descity=route.descity,
+                    date=route.date,
+                    plate_no=route.plate_no
+                ).values_list('no_seat', flat=True)
+
+                booked_seats = set(int(seat) for seat in booked_tickets)
+                booked_seat_count = len(booked_seats)
+                remaining_seats = total_seats - booked_seat_count
+                unbooked_seats = [seat for seat in range(1, total_seats + 1) if seat not in booked_seats]
+
+                if route.plate_no == plate_no and remaining_seats <= 0:
+                    bus_full = True
+
+                route_info.append({
+                    'route': route,
+                    'remaining_seats': remaining_seats if remaining_seats > 0 else "Full"
+                })
+
+            except Bus.DoesNotExist:
+                continue
+
+        routes = Route.objects.filter(depcity=depcity, descity=descity, date=date,plate_no=plate_no)
+        if bus_full:
+            return render(request, 'users/roote.html', {
+                'error': 'This Bus is Full!',
+                'routes': routes
+            })
+
+        routes = Route.objects.filter(depcity=depcity, descity=descity, date=date)
+        all_seats = list(range(1, total_seats + 1))  # Generate all seat numbers
+
+        return render(request, 'users/ticket.html', {
+            'routes': routes,
+            'remaining_seats': remaining_seats,
+            'unbooked_seats': unbooked_seats,
+            'booked_seats': booked_seats,
+            'all_seats': all_seats  # Send all seats for rendering
+        })
+    return render(request, 'users/roote.html', {})
+"""
+
+
+
+"""
+def Select(request):
+    if request.method == 'POST':
+        plate_no = request.POST.get('plate_no')
+        depcity = request.POST.get('depcity')
+        descity = request.POST.get('descity')
+        date = request.POST.get('date')
+
+        routes = Route.objects.filter(depcity=depcity, descity=descity, date=date)
+
+        route_info = []
+        bus_full = False
+
+        for route in routes:
+            try:
+                bus = Bus.objects.get(plate_no=route.plate_no)
+                total_seats = int(bus.no_seats)
+
+                # Fetch booked tickets for the current route
+                booked_tickets = Ticket.objects.filter(
+                    depcity=route.depcity,
+                    descity=route.descity,
+                    date=route.date,
+                    plate_no=route.plate_no
+                ).values_list('no_seat', flat=True)
+
+                # Convert booked tickets to a set of integers
+                booked_seats = set(int(seat) for seat in booked_tickets)
+                booked_seat_count = len(booked_seats)
+
+                # Calculate remaining seats
+                remaining_seats = total_seats - booked_seat_count
+
+                # Create a list of unbooked seats
+                unbooked_seats = [seat for seat in range(1, total_seats + 1) if seat not in booked_seats]
+
+                # Check if the specific bus is full
+                if route.plate_no == plate_no and remaining_seats <= 0:
+                    bus_full = True
+
+                # Append route information
+                route_info.append({
+                    'route': route,
+                    'remaining_seats': remaining_seats if remaining_seats > 0 else "Full"
+                })
+
+            except Bus.DoesNotExist:
+                continue  # Skip routes with no associated bus
+
+        # Debugging output
+        print(f"Route Information: {route_info}")
+
+        # Handle the case where the bus is full
+        if bus_full:
+            return render(request, 'users/roote.html', {
+                'error': 'This Bus is Full!',
+                'routes': route_info
+            })
+
+        # Fetch routes again for the specific plate number
+        routes = Route.objects.filter(depcity=depcity, descity=descity, date=date, plate_no=plate_no)
+
+        # Render the ticket page with the relevant data
+        return render(request, 'users/ticket.html', {
+            'routes': routes,
+            'remaining_seats': remaining_seats,
+            'unbooked_seats': unbooked_seats,
+            'booked_seats': booked_seats
+        })
+    return render(request, 'users/roote.html', {})
+"""
+
+
+
+
+
+"""
+from django.shortcuts import render
+from .models import City, Route, Bus, Ticket
+
+def book(request):
+    des = City.objects.all()
+    if request.method == 'POST':
+        date = request.POST.get('date')
+        depcity = request.POST.get('depcity')
+        descity = request.POST.get('descity')
+        rout = Route.objects.filter(depcity=depcity, descity=descity, date=date)
+        routes = []
+
+        if rout.exists():
+            for route in rout:
+                try:
+                    bus = Bus.objects.get(plate_no=route.plate_no)
+                    total_seats = int(bus.no_seats)
+                except Bus.DoesNotExist:
+                    total_seats = 0
+
+                booked_tickets = Ticket.objects.filter(
+                    depcity=route.depcity,
+                    descity=route.descity,
+                    date=route.date,
+                    plate_no=route.plate_no
+                ).count()
                 remaining_seats = max(0, total_seats - booked_tickets)
 
-                # Set 'remaining_seats' to "Full" if it is 0
+                # Update remaining_seats to "Full" if no seats available
                 if remaining_seats == 0:
                     remaining_seats = "Full"
 
@@ -790,13 +1265,9 @@ def book(request):
 
             return render(request, 'users/roote.html', {'routes': routes, 'success': "Routes info---"})
         else:
-            return render(request, 'users/cheeckroutee.html', {'des': des, 'error': "Try Again! There is no route information!"})
+            return render(request, 'users/cheeckroutee.html', {'des': des, 'error': "There is no Travel for this information!"})
 
     return render(request, 'users/cheeckroutee.html', {'des': des})
-
-
-from django.shortcuts import render
-from .models import Bus, Ticket, Route
 
 def Select(request):
     if request.method == 'POST':
@@ -804,105 +1275,161 @@ def Select(request):
         depcity = request.POST.get('depcity')
         descity = request.POST.get('descity')
         date = request.POST.get('date')
-        
+
         try:
             bus = Bus.objects.get(plate_no=plate_no)
             total_seats = int(bus.no_seats)
         except Bus.DoesNotExist:
-            total_seats = 0
-        
-        num_booked_seats = Ticket.objects.filter(
+            return render(request, 'users/roote.html', {
+                'error': 'Bus not found!',
+                'routes': []
+            })
+
+        booked_tickets = Ticket.objects.filter(
             depcity=depcity,
             descity=descity,
             date=date,
             plate_no=plate_no
-        ).count()
-        
-        remaining_seats = max(0, total_seats - num_booked_seats)
-        
-        if remaining_seats == 0:
-            rout = Route.objects.filter(depcity=depcity, descity=descity, date=date)
-            routes = []
-            if rout.exists():
-                for route in rout:
-                    try:
-                        bus = Bus.objects.get(plate_no=route.plate_no)
-                        total_seats = int(bus.no_seats)
-                    except Bus.DoesNotExist:
-                        total_seats = 0
-                    
-                    booked_tickets = Ticket.objects.filter(
-                        depcity=route.depcity,
-                        descity=route.descity,
-                        date=route.date,
-                        plate_no=route.plate_no
-                    ).count()
-                    
-                    remaining_seats = max(0, total_seats - booked_tickets)
-                    
-                    # Change remaining_seats to "Full" if it is 0
-                    if remaining_seats == 0:
-                        remaining_seats = "Full"
-                    
-                    routes.append({
-                        'route': route,
-                        'remaining_seats': remaining_seats
-                    })
-            
+        ).values_list('no_seat', flat=True)
+
+        # Ensure seat numbers are integers
+        booked_seats = set(int(seat) for seat in booked_tickets)
+
+        # Count of booked seats
+        booked_seat_count = len(booked_seats)
+
+        # Calculate remaining seats
+        remaining_seats = total_seats - booked_seat_count
+
+        if remaining_seats <= 0:
             return render(request, 'users/roote.html', {
                 'error': 'This Bus is Full!',
-                'routes': routes
+                'remaining_seats': "Full",
+                'routes': []
+                print(f"Remaining Seats: {remaining_seats}")
+                print(f"Routes: {routes}")
             })
 
-        wenberkutr = str(num_booked_seats + 1)
+        # Calculate unbooked seats
+        unbooked_seats = [seat for seat in range(1, total_seats + 1) if seat not in booked_seats]
+
+        # Fetch routes based on the criteria
         routes = Route.objects.filter(depcity=depcity, descity=descity, date=date, plate_no=plate_no)
-        
+
         if routes.exists():
             return render(request, 'users/ticket.html', {
-                'kery': remaining_seats,
-                'wenberkutr': wenberkutr,
+                'remaining_seats': remaining_seats,
+                'unbooked_seats': unbooked_seats,
                 'routes': routes
-            }) 
+            })
     return render(request, 'users/roote.html', {})
+def Select(request):
+    if request.method == 'POST':
+        plate_no = request.POST.get('plate_no')
+        depcity = request.POST.get('depcity')
+        descity = request.POST.get('descity')
+        date = request.POST.get('date')
 
+        try:
+            bus = Bus.objects.get(plate_no=plate_no)
+            total_seats = int(bus.no_seats)
+        except Bus.DoesNotExist:
+            return render(request, 'users/roote.html', {
+                'error': 'Bus not found!',
+                'routes': []
+            })
 
+        # Fetch booked seats
+        booked_tickets = Ticket.objects.filter(
+            depcity=depcity,
+            descity=descity,
+            date=date,
+            plate_no=plate_no
+        ).values_list('no_seat', flat=True)
+
+        # Ensure seat numbers are integers
+        booked_seats = set(int(seat) for seat in booked_tickets)
+
+        # Count of booked seats
+        booked_seat_count = len(booked_seats)
+
+        # Calculate remaining seats
+        remaining_seats = total_seats - booked_seat_count
+
+        # Fetch routes based on the criteria
+        routes = Route.objects.filter(depcity=depcity, descity=descity, date=date, plate_no=plate_no)
+
+        # Debugging information
+        print(f"Remaining Seats: {remaining_seats}")
+        print(f"Routes: {routes}")
+
+        if remaining_seats <= 0:
+            # If the bus is full, prepare to show the route as full
+            full_route_info = {
+                'route': {
+                    'depcity': depcity,
+                    'descity': descity,
+                    'date': date,
+                    'plate_no': plate_no
+                },
+                'remaining_seats': "Full"
+            }
+            return render(request, 'users/roote.html', {
+                'error': 'This Bus is Full!',
+                'routes': [full_route_info]  # Display the full route
+            })
+
+        if routes.exists():
+            return render(request, 'users/ticket.html', {
+                'remaining_seats': remaining_seats,
+                'unbooked_seats': [seat for seat in range(1, total_seats + 1) if seat not in booked_seats],
+                'routes': [{'route': route, 'remaining_seats': remaining_seats} for route in routes]
+            })
+    return render(request, 'users/roote.html', {})
+"""
 
 
 
 def details(request):
     return render(request, 'users/details.html')
+
+
+
 def admindelete(request):
     if request.method == 'POST':
         fname = request.POST.get('fname')
         lname = request.POST.get('lname')
         username = request.POST.get('username')
-
-        row_count = Admin.objects.count()
+        phone = request.POST.get('phone')
+        row_count = CustomUser.objects.count()
         if row_count <= 1:
-            admins = Admin.objects.all()
+            admins = CustomUser.objects.all()
             return render(request, 'users/admindelet.html', {
                 'admins': admins,
                 'error': "Cannot delete admin. At least one account must exist."
             })
-        deleted_count, _ = Admin.objects.filter(fname=fname, lname=lname, username=username).delete()
+        deleted_count, _ = CustomUser.objects.filter(fname=fname, lname=lname, username=username).delete()
         if deleted_count > 0:
-            admins = Admin.objects.all()
+            admins = CustomUser.objects.all()
             return render(request, 'users/admindelet.html', {
                 'admins': admins,
                 'success': "Admin deleted successfully."
             })
         else:
-            admins = Admin.objects.all()
+            admins = CustomUser.objects.all()
             return render(request, 'users/admindelet.html', {
                 'admins': admins,
                 'error': "No admin found with the provided information."
             })
-    admins = Admin.objects.all()
+    admins = CustomUser.objects.all()
     if admins:
         return render(request, 'users/admindelet.html', {'admins': admins})
     else:
         return render(request, 'users/error.html', {'error': "There are no admins to delete."})
     return render(request, 'users/admindelet.html',{'admins': admins})
+
+
+
 def delete(request):
     return render(request, 'users/admindelet.html')
 
@@ -923,7 +1450,7 @@ def routedelete(request):
             side_no=side_no
         ).count()
         if booked_tickets > 0:
-            return render(request, 'users/routedelete.html', {'routes': routes, 'error': "This Routes can not delete b/c has booked Tickets.!!"})
+            return render(request, 'users/routedelete.html', {'routes': routes, 'error': "This Routes has booked Tickets.!!"})
         rows_deleted, _ = Route.objects.filter(
             depcity=depcity,
             descity=descity,
@@ -942,9 +1469,12 @@ def routedelete(request):
     else:
         return render(request, 'users/error.html', {'error': "There are no routes to delete."})
 
+
 def buses(request):
     buses = Bus.objects.all()
     return render(request, 'users/buses.html',{'buses': buses})
+
+
 
 def workerdelete(request):
     driver = Worker.objects.all()
@@ -966,6 +1496,8 @@ def workerdelete(request):
         return render(request, 'users/error.html', {'error': 'there is no driver for delete'})
     return render(request, 'users/driverdelete.html',{'driver': driver})
 
+
+
 def Showtickets(request):
     if request.method == 'POST':
         plate_no = request.POST.get('plate_no')
@@ -973,17 +1505,18 @@ def Showtickets(request):
         date = request.POST.get('date')
         depcity = request.POST.get('depcity')
         descity = request.POST.get('descity')
-        routes = Ticket.objects.filter(
+        route = Ticket.objects.filter(
             plate_no=plate_no,
             side_no=side_no,
             date=date,
             depcity=depcity,
             descity=descity
         )
-        if routes.exists():
-            return render(request, 'users/ticketoche.html', {'routes': routes})
+        routes = Route.objects.filter(side_no=side_no)
+        if route.exists():
+            return render(request, 'users/ticketoche.html', {'route': route})
         else:
-            return render(request, 'users/rooteee.html', {'error': 'There are no booked tickets for this route'})
+            return render(request, 'users/rooteee.html', {'error': 'There are no booked tickets for this route', 'routes': routes})
     return render(request, 'users/ticketoche.html')
 
 
@@ -1028,26 +1561,29 @@ def citydelete(request):
     return render(request, 'users/citydelet.html',{'cities': cities})
 
 def commentdelete(request):
-    comments = Fedback.objects.all()  # Always fetch comments at the start
+    comments = Feedback.objects.all()  # Always fetch comments at the start
     if request.method == 'POST':
         email = request.POST.get('email')
         name = request.POST.get('name')
         phone = request.POST.get('phone')
         try:
-            comment = Fedback.objects.get(name=name, email=email, phone=phone)
+            comment = Feedback.objects.get(name=name, email=email, phone=phone)
             comment.delete()
-            comments = Fedback.objects.all()
+            comments = Feedback.objects.all()
             return render(request, 'users/commentdelet.html', {
                 'comments': comments,
                 'success': 'Comment Deleted Successfully'
             })
-        except Fedback.DoesNotExist:
+        except Feedback.DoesNotExist:
             return render(request, 'users/commentdelet.html', {
                 'comments': comments,
                 'error': 'There is No comment for Deletion'
             })
     return render(request, 'users/commentdelet.html', {'comments': comments})
 
+
+
+"""
 def updatebus(request):
     buses = Bus.objects.all()  # Fetch all bus records
     if request.method == "POST":
@@ -1075,8 +1611,334 @@ def updatebus(request):
                 'buses': buses
             })
     return render(request, 'users/busupdate.html', {'buses': buses})
+"""
 
 
+
+def updatebus(request):
+    buses = Bus.objects.all()  # Fetch all bus records
+
+    if request.method == "POST":
+        plate_no = request.POST.get('plate_no')
+        new_sideno = request.POST.get('new_sideno')
+        no_seats = request.POST.get('no_seats')
+        sideno = request.POST.get('sideno')
+        try:
+            bus = Bus.objects.get(plate_no=plate_no)  # Assuming plate_no is unique
+            
+            if Bus.objects.filter(sideno=new_sideno).exists():
+                return render(request, 'users/busupdate.html', {
+                    'error1': 'This side no is already exist.',
+                    'buses': buses
+                })
+
+
+            """
+
+            if Bus.objects.filter(plate_no=plate_no,no_seats=no_seats,sideno=new_sideno).exists():
+                 return render(request, 'users/busupdate.html', {
+                    'error1': 'No change the same as the first side No.',
+                    'buses': buses
+                })
+
+            
+            if Bus.objects.filter(sideno=new_sideno).exists():
+                return render(request, 'users/busupdate.html', {
+                'error': 'The new Side No is already reserved for another bus.',
+                'buses': buses
+                })
+
+            if Bus.objects.filter(plate_no=plate_no, no_seats=no_seats, sideno=new_sideno).exists():
+                return render(request, 'users/busupdate.html', {
+                'error': 'No change; the same as the first side No.',
+                'buses': buses
+                })
+            """
+
+            """
+            error = []  # Initialize an empty list to hold error messages
+
+            # Check if the new side number is already reserved for another bus
+            if Bus.objects.filter(sideno=new_sideno).exists():
+                error.append('The new Side No is already reserved for another bus.')
+
+            # Check if the new side number is the same as the existing bus
+            if Bus.objects.filter(plate_no=plate_no, no_seats=no_seats, sideno=new_sideno).exists():
+                error.append('No change; the same as the first side No.')
+
+            # If there are any errors, render the template with the error messages
+            if error:
+                return render(request, 'users/busupdate.html', {
+                'error': error,  # Pass the list of errors to the template
+                'buses': buses
+                })
+            """
+
+
+            # Update the bus side number and no_seats
+            bus.sideno = new_sideno
+            bus.no_seats = no_seats
+            bus.save()
+
+            # Update side number for all workers associated with this bus
+            Worker.objects.filter(plate_no=plate_no).update(side_no=new_sideno)
+            Route.objects.filter(plate_no=plate_no).update(side_no=new_sideno)
+
+            return render(request, 'users/busupdate.html', {
+                'success': 'Side No changed successfully!',
+                'buses': buses
+            })
+
+        except Bus.DoesNotExist:
+            return render(request, 'users/busupdate.html', {
+                'error': 'Bus not found.',
+                'buses': buses
+            })
+    return render(request, 'users/busupdate.html', {'buses': buses})
+
+
+
+"""
+from django.utils import timezone
+from datetime import timedelta
+from django.shortcuts import render
+from .models import Bus, Route, Ticket, Buschange
+
+def changebus(request):
+    # Get all routes and buses
+    routes = Route.objects.all()
+    buses = Bus.objects.all()
+
+    if request.method == "POST":
+        depcity = request.POST.get('depcity')
+        descity = request.POST.get('descity')
+        date = request.POST.get('date')
+        side_no = request.POST.get('side_no')
+        new_side_no = request.POST.get('new_side_no')
+
+        try:
+            # Get bus information based on the new side number
+            bus_info = Bus.objects.filter(sideno=new_side_no).first()
+
+            if not bus_info:
+                return render(request, 'users/buschange.html', {
+                    'buses': buses,
+                    'routes': routes,
+                    'error': 'Invalid side number selected.'
+                })
+        
+
+            new_plate_no = bus_info.plate_no  # Assuming Bus model has a plate_no field
+            total_seats = bus_info.no_seats  # Assuming Bus model has a no_seats field
+
+            # Check if the new route already exists
+            if Route.objects.filter(plate_no=new_plate_no, side_no=new_side_no).exists():
+                return render(request, 'users/buschange.html', {
+                    'buses': buses,
+                    'routes': routes,
+                    'error': "Can't change b/c there is already a route with this combination."
+                })
+
+            booked_tickets_count = Ticket.objects.filter(
+                date=date,
+                side_no=side_no
+            ).count()
+
+            # Check for available seats
+            if booked_tickets_count > total_seats:
+                return render(request, 'users/buschange.html', {
+                    'buses': buses,
+                    'routes': routes,
+                    'error': 'Not enough seats available for this change.'
+                })
+
+            # Update the route information
+            route = Route.objects.get(depcity=depcity, descity=descity, date=date, side_no=side_no)
+            route.plate_no = new_plate_no
+            route.side_no = new_side_no
+            route.save()
+
+            # Handle reciprocal route updates if necessary
+            if depcity.strip() == "Addisababa":
+                reciprocal_route = Route.objects.get(
+                    depcity=descity,
+                    descity=depcity,
+                    date=(timezone.datetime.strptime(date, '%Y-%m-%d') + timedelta(days=1)).strftime('%Y-%m-%d'),
+                    side_no=side_no
+                )
+                reciprocal_route.plate_no = new_plate_no
+                reciprocal_route.side_no = new_side_no
+                reciprocal_route.save()
+
+                Buschange.objects.create(
+                    plate_no=side_no,
+                    side_no=side_no,
+                    new_plate_no=new_plate_no,
+                    new_side_no=new_side_no,
+                    date=(timezone.datetime.strptime(date, '%Y-%m-%d') + timedelta(days=1)).strftime('%Y-%m-%d'),
+                    depcity=descity,
+                    descity=depcity
+                )
+
+            # Update tickets for the old route
+            Ticket.objects.filter(
+                date=date,
+                side_no=side_no
+            ).update(
+                plate_no=new_plate_no,
+                side_no=new_side_no
+            )
+
+            # Log the bus change
+            Buschange.objects.create(
+                plate_no=side_no,
+                side_no=side_no,
+                new_plate_no=new_plate_no,
+                new_side_no=new_side_no,
+                date=date,
+                depcity=depcity,
+                descity=descity
+            )
+            return render(request, 'users/buschange.html', {
+                'routes': routes,
+                'buses': buses,
+                'success': 'Bus changed successfully.'
+            })
+        except Route.DoesNotExist:
+            return render(request, 'users/buschange.html', {
+                'routes': routes,
+                'buses': buses,
+                'error': "The specified route does not exist."
+            })
+
+    return render(request, 'users/buschange.html', {
+        'routes': routes,
+        'buses': buses
+    })
+"""
+
+
+
+
+"""
+from django.utils import timezone
+from datetime import timedelta
+from django.shortcuts import render
+from .models import Bus, Route, Ticket, Buschange
+
+def changebus(request):
+
+    routes = Route.objects.all()
+    buses = Bus.objects.all()
+
+    if request.method == "POST":
+        depcity = request.POST.get('depcity')
+        descity = request.POST.get('descity')
+        date = request.POST.get('date')
+        side_no = request.POST.get('side_no')
+        new_side_no = request.POST.get('new_side_no')
+
+        try:
+            bus_info = Bus.objects.filter(sideno=new_side_no).first()
+            if not bus_info:
+                return render(request, 'users/buschange.html', {
+                    'buses': buses,
+                    'routes': routes,
+                    'error': 'Invalid side number selected.'
+                })
+
+            new_plate_no = bus_info.plate_no
+            total_seats = int(bus_info.no_seats) if bus_info.no_seats else 0
+
+            if Route.objects.filter(plate_no=new_plate_no, side_no=new_side_no).exists():
+                return render(request, 'users/buschange.html', {
+                    'buses': buses,
+                    'routes': routes,
+                    'error': "Can't change b/c this bus is has route for this date."
+                })
+
+            booked_tickets_count = Ticket.objects.filter(
+                date=date,
+                side_no=side_no
+            ).count()
+
+            # Check for available seats
+            if booked_tickets_count > total_seats:
+                return render(request, 'users/buschange.html', {
+                    'buses': buses,
+                    'routes': routes,
+                    'error': 'Not enough seats available for this change.'
+                })
+            route = Route.objects.get(depcity=depcity, descity=descity, date=date, side_no=side_no)
+            route.plate_no = new_plate_no
+            route.side_no = new_side_no
+            route.save()
+
+            # Handle reciprocal route updates if necessary
+            if depcity.strip() == "Addisababa":
+                reciprocal_route = Route.objects.get(
+                    depcity=descity,
+                    descity=depcity,
+                    date=(timezone.datetime.strptime(date, '%Y-%m-%d') + timedelta(days=1)).strftime('%Y-%m-%d'),
+                    side_no=side_no
+                )
+                reciprocal_route.plate_no = new_plate_no
+                reciprocal_route.side_no = new_side_no
+                reciprocal_route.save()
+
+                Buschange.objects.create(
+                    plate_no=side_no,
+                    side_no=side_no,
+                    new_plate_no=new_plate_no,
+                    new_side_no=new_side_no,
+                    date=(timezone.datetime.strptime(date, '%Y-%m-%d') + timedelta(days=1)).strftime('%Y-%m-%d'),
+                    depcity=descity,
+                    descity=
+            for ticket in booked_tickets:
+                # Assuming seat_no is a field in the Ticket model
+                # Change the seat number based on the new bus's total seats
+                #new_seat_no = (ticket.no_seat % total_seats) if total_seats > 0 else None
+                new_seat_no = (int(ticket.seat_no) % total_seats) if total_seats > 0 else None
+                ticket.plate_no = new_plate_no
+                ticket.side_no = new_side_no
+                ticket.no_seat = new_seat_no
+                ticket.save()
+                
+            Buschange.objects.create(
+                plate_no=side_no,
+                side_no=side_no,
+                new_plate_no=new_plate_no,
+                new_side_no=new_side_no,
+                date=date,
+                depcity=depcity,
+                descity=descity
+            )
+
+            return render(request, 'users/buschange.html', {
+                'routes': routes,
+                'buses': buses,
+                'success': 'Bus changed successfully.'
+            })
+        except Route.DoesNotExist:
+            return render(request, 'users/buschange.html', {
+                'routes': routes,
+                'buses': buses,
+                'error': "The specified route does not exist."
+            })
+
+    return render(request, 'users/buschange.html', {
+        'routes': routes,
+        'buses': buses
+    })
+"""
+
+
+
+
+
+
+
+"""
 from django.utils import timezone
 from datetime import timedelta
 from django.shortcuts import render
@@ -1093,17 +1955,12 @@ def changebus(request):
         new_side_no = request.POST.get('new_side_no')
         new_plate_no = request.POST.get('new_plate_no')
         try:
-            if Route.objects.filter(plate_no=new_plate_no, side_no=new_side_no).exists():
-                return render(request, 'users/buschange.html', {
-                    'buses': buses,
-                    'routes': routes,
-                    'error': "Can't change b/c there is the same as the first."
-                })
+
             if Route.objects.filter(side_no=new_side_no, date=date, plate_no=new_plate_no).exists():
                 return render(request, 'users/buschange.html', {
                     'buses': buses,
                     'routes': routes,
-                    'error': 'This bus is already reserved for another route for this date.'
+                    'error': 'This bus is already reserved for route for this date.'
                 })
             booked_tickets_count = Ticket.objects.filter(
                 date=date,
@@ -1184,8 +2041,142 @@ def changebus(request):
         'routes': routes,
         'buses': buses
     })
+"""
+
+
+
+
+from django.utils import timezone
+from datetime import timedelta
+from django.shortcuts import render
+from .models import Bus, Route, Ticket, Buschange
+
+def changebus(request):
+    routes = Route.objects.all()
+    buses = Bus.objects.all()
+
+    if request.method == "POST":
+        depcity = request.POST.get('depcity')
+        descity = request.POST.get('descity')
+        date = request.POST.get('date')
+        side_no = request.POST.get('side_no')
+        new_side_no = request.POST.get('new_side_no')
+
+        try:
+            if Route.objects.filter(side_no=new_side_no, date=date).exists():
+                return render(request, 'users/buschange.html', {
+                    'buses': buses,
+                    'routes': routes,
+                    'error': 'This bus is already reserved for route for this date.'
+                })
+            bus_info = Bus.objects.filter(sideno=new_side_no).first()
+            if not bus_info:
+                return render(request, 'users/buschange.html', {
+                    'buses': buses,
+                    'routes': routes,
+                    'error': 'Invalid side number selected.'
+                })
+
+            new_plate_no = bus_info.plate_no
+            total_seats = int(bus_info.no_seats) if bus_info.no_seats else 0
+
+            booked_tickets_count = Ticket.objects.filter(
+                date=date,
+                side_no=side_no
+            ).count()
+            if booked_tickets_count > total_seats:
+                return render(request, 'users/buschange.html', {
+                    'buses': buses,
+                    'routes': routes,
+                    'error': 'Not enough seats available for this change.'
+                })
+
+            route = Route.objects.get(depcity=depcity, descity=descity, date=date, side_no=side_no)
+            route.plate_no = new_plate_no
+            route.side_no = new_side_no
+            route.save()
+
+            # Handle reciprocal route updates if necessary
+            if depcity.strip() == "Addisababa":
+                reciprocal_route = Route.objects.get(
+                    depcity=descity,
+                    descity=depcity,
+                    date=(timezone.datetime.strptime(date, '%Y-%m-%d') + timedelta(days=1)).strftime('%Y-%m-%d'),
+                    side_no=side_no
+                )
+                reciprocal_route.plate_no = new_plate_no
+                reciprocal_route.side_no = new_side_no
+                reciprocal_route.save()
+
+            # Update tickets with the new bus details
+            Ticket.objects.filter(
+                date=date,
+                side_no=side_no
+            ).update(
+                plate_no=new_plate_no,
+                side_no=new_side_no
+            )
+
+            # Get booked seats and calculate available seats
+            booked_tickets = Ticket.objects.filter(
+                date=date,
+                side_no=new_side_no
+            ).values_list('no_seat', flat=True)
+            booked_seats = set(int(seat) for seat in booked_tickets)
+            booked_seat_count = len(booked_seats)
+            remaining_seats = total_seats - booked_seat_count
+            unbooked_seats = [seat for seat in range(1, total_seats + 1) if seat not in booked_seats]
+
+            Buschange.objects.create(
+                plate_no=side_no,
+                side_no=side_no,
+                new_plate_no=new_plate_no,
+                new_side_no=new_side_no,
+                date=date,
+                depcity=depcity,
+                descity=descity
+            )
+
+            return render(request, 'users/buschange.html', {
+                'routes': routes,
+                'buses': buses,
+                'success': 'Bus changed successfully.',
+                'total_seats': total_seats,
+                'booked_seats': booked_seat_count,
+                'remaining_seats': remaining_seats,
+                'unbooked_seats': unbooked_seats,
+                'booked_seat_list': booked_seats
+            })
+        except Route.DoesNotExist:
+            return render(request, 'users/buschange.html', {
+                'routes': routes,
+                'buses': buses,
+                'error': "The specified route does not exist."
+            })
+
+    return render(request, 'users/buschange.html', {
+        'routes': routes,
+        'buses': buses
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def changebus_redirect(request):
+    return redirect('changebus')
 
 def changebuses(request):
+    des = City.objects.all()
     if request.method == 'POST':
         date = request.POST.get('date')
         buschanges = Buschange.objects.filter(date=date)
@@ -1195,12 +2186,15 @@ def changebuses(request):
         else:
             buschanges = Buschange.objects.all()
             buschanges_count = buschanges.count()
-            return render(request, 'users/index.html', {'buschanges_count': buschanges_count, 'error1': "NO change buses for this travel date!"})
+            return render(request, 'users/index.html', {'buschanges_count': buschanges_count, 'error1': "NO change buses for this travel date!",'des': des})
     return render(request, 'users/index.html')
 
 def registor(request):
     buschanges = Buschange.objects.all()
     buschanges_count = buschanges.count()
+
+    des = City.objects.all()  # Fetch all cities
+    bus = Bus.objects.all()
     if request.method == 'POST':
         username = request.POST['username']
         email = request.POST['email']
@@ -1229,4 +2223,4 @@ def registor(request):
         )
         user.save()
         return render(request, 'users/register.html', {'success': 'User registored Successfully.','buschanges_count': buschanges_count})
-    return render(request, 'users/register.html',{'buschanges_count': buschanges_count})
+    return render(request, 'users/register.html',{'buschanges_count': buschanges_count, 'bus': bus, 'des': des})

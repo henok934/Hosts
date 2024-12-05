@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Show Route</title>
+<title>Booked Tickets</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="Travelix Project">
@@ -14,13 +14,8 @@
 <link rel="stylesheet" type="text/css" href="../static/styles/main_styles.css">
 <link rel="stylesheet" type="text/css" href="../static/styles/responsive.css">
 </head>
-
-
-
 <body style="background-color: lightblue;">
-
 <div class="super_container">
-               
 <header class="header">
                 <div class="top_bar">
                         <div class="container">
@@ -60,10 +55,9 @@
                            <select onchange="location.href = this.value;">
                            <option value="#">Select for Register</option>
                            <option value="{% url 'businsert' %}">Register Bus</option>
-                           <option value="{% url 'route' %}">Register Routes</option>
-                           <option value="{% url 'admins' %}">Register Admin</option>
+                           <option value="{% url 'route' %}">Register Route</option>
+                           <option value="{% url 'registor' %}">Register Admin</option>
                            <option value="{% url 'city' %}">Register City</option>
-                           <option value="{% url 'admins' %}">Register Admin </option>
                            <option value="{% url 'worker' %}">Register Driver</option>
                            </select>
                           <select onchange="location.href = this.value;">
@@ -136,10 +130,9 @@
                            <select onchange="location.href = this.value;">
                            <option value="#">Select for Register</option>
                            <option value="{% url 'businsert' %}">Register Bus</option>
-                           <option value="{% url 'route' %}">Register Routes</option>
-                           <option value="{% url 'admins' %}">Register Admin</option>
+                           <option value="{% url 'route' %}">Register Route</option>
+                           <option value="{% url 'registor' %}">Register Admin</option>
                            <option value="{% url 'city' %}">Register City</option>
-                           <option value="{% url 'admins' %}">Register Admin </option>
                            <option value="{% url 'worker' %}">Register Driver</option>
                            </select>
                           <select onchange="location.href = this.value;">
@@ -171,315 +164,149 @@
                 </div>
         </div>
 	</br></br></br></br></br></br></br></br></br></br>
-
-<div id="ticketContainer" style="background-color: #f1f1f1; padding: 10px;">
-  <button onclick="downloadTicket()" style="background-color: #4CAF50;margin-left: 1050px; padding: 10px 20px; border: none; cursor: pointer;">Download Ticket</button>
-</div>
-
-
 <!--
-<div id="ticketContent">
-  <h3>Admin Name ------------------</h3>
-  <h3>Signature -------------------</h3>
-  <h3>Date ------------------------</h3>
-  <h1 style="margin-left:300px;color:brown;"><b>Show Tickets Info</b></h1><br/>
-     {% if routes %}
-  <p>From: {{ routes.0.depcity }} To: {{ routes.0.descity }} Date: {{ routes.0.date }}</p>
-{% else %}
-  <p>No booked tickets available for this route.</p>
-{% endif %}
-  <table border="2">
-    <thead>
-      <tr style="background-color: white;">
-        <th><p><b style="color: blue;">No.</b></p></th>
-        <th><p><b style="color: blue;">First Name</b></p></th>
-        <th><p><b style="color: blue;">Last Name</b></p></th>
-        <th><p><b style="color: blue;">Phone</b></p></th>
-        <th><p><b style="color: blue;">Departure</b></p></th>
-        <th><p><b style="color: blue;">Destination</b></p></th>
-        <th><p><b style="color: blue;">Travel Date</b></p></th>
-        <th><p><b style="color: blue;">Seat number</b></p></th>
-        <th><p><b style="color: blue;">Price</b></p></th>
-        <th><p><b style="color: blue;">Side No</b></p></th>
-        <th><p><b style="color: blue;">Plate No</b></p></th>
-        <th><p><b style="color: blue;">Check</b></p></th>
-      </tr>
-    </thead>
-    <tbody style="background-color: magenta;">
-      {% for route in routes %}
-      <tr>
-        <td style="background-color: green;"><h3><b style="color: yellow;">{{ loop.index }}</b></h3></td>
-        <td><p> <b style="color: green;">{{ route.firstname }} </b></p></td>
-        <td> <p> <b style="color: green;"> {{ route.lastname }} </b></p></td>
-        <td> <p> <b style="color: green;"> {{ route.phone }} </b></p></td>
-        <td> <p> <b style="color: green;">{{ route.depcity }} </b></p></td>
-        <td> <p> <b style="color: green;">{{ route.descity }} </b></p></td>
-        <td> <p> <b style="color: green;">{{ route.date }} </b></p></td>
-        <td> <p> <b style="color: green;">{{ route.no_seat }} </b></p></td>
-        <td> <p> <b style="color: green;">{{ route.price }} </b></p></td>
-        <td> <p> <b style="color: green;">{{ route.side_no }} </b></p></td>
-        <td> <p> <b style="color: green;">{{ route.plate_no }} </b></p></td>
-        <td> <p> <b style="color: green;"></b></p></td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
-<div id="ticketContent" style="text-align: center; margin: 0 auto;">
-  <h3>Admin Name ------------------</h3>
-  <h3>Signature -------------------</h3>
-  <h3>Date ------------------------</h3>
-  <h1 style="color: brown;"><b>Show Tickets Info</b></h1><br/>
-
-  {% if routes %}
-    <p>From: {{ routes.0.depcity }} To: {{ routes.0.descity }} Date: {{ routes.0.date }}</p>
-  {% else %}
-    <p>No booked tickets available for this route.</p>
-  {% endif %}
-
-  <table style="width: 80%; margin: auto; border-collapse: collapse; border: 2px solid black;">
-    <thead style="background-color: white;">
-      <tr>
-        <th style="border: 1px solid black;"><b style="color: blue;">No.</b></th>
-        <th style="border: 1px solid black;"><b style="color: blue;">First Name</b></th>
-        <th style="border: 1px solid black;"><b style="color: blue;">Last Name</b></th>
-        <th style="border: 1px solid black;"><b style="color: blue;">Phone</b></th>
-        <th style="border: 1px solid black;"><b style="color: blue;">Departure</b></th>
-        <th style="border: 1px solid black;"><b style="color: blue;">Destination</b></th>
-        <th style="border: 1px solid black;"><b style="color: blue;">Travel Date</b></th>
-        <th style="border: 1px solid black;"><b style="color: blue;">Seat Number</b></th>
-        <th style="border: 1px solid black;"><b style="color: blue;">Price</b></th>
-        <th style="border: 1px solid black;"><b style="color: blue;">Side No</b></th>
-        <th style="border: 1px solid black;"><b style="color: blue;">Plate No</b></th>
-        <th style="border: 1px solid black;"><b style="color: blue;">Check</b></th>
-      </tr>
-    </thead>
-    <tbody style="background-color: magenta;">
-      {% for route in routes %}
-      <tr>
-        <td style="background-color: green; border: 1px solid black;"><b style="color: yellow;">{{ loop.index }}</b></td>
-        <td style="border: 1px solid black;"><b style="color: green;">{{ route.firstname }}</b></td>
-        <td style="border: 1px solid black;"><b style="color: green;">{{ route.lastname }}</b></td>
-        <td style="border: 1px solid black;"><b style="color: green;">{{ route.phone }}</b></td>
-        <td style="border: 1px solid black;"><b style="color: green;">{{ route.depcity }}</b></td>
-        <td style="border: 1px solid black;"><b style="color: green;">{{ route.descity }}</b></td>
-        <td style="border: 1px solid black;"><b style="color: green;">{{ route.date }}</b></td>
-        <td style="border: 1px solid black;"><b style="color: green;">{{ route.no_seat }}</b></td>
-        <td style="border: 1px solid black;"><b style="color: green;">{{ route.price }}</b></td>
-        <td style="border: 1px solid black;"><b style="color: green;">{{ route.side_no }}</b></td>
-        <td style="border: 1px solid black;"><b style="color: green;">{{ route.plate_no }}</b></td>
-        <td style="border: 1px solid black;"><b style="color: green;"></b></td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+<div id="ticketContainer" style="background-color: #f1f1f1; padding: 10px;">
+  <button onclick="downloadTicket()" style="background-color: #4CAF50;margin-left: 100px; padding: 10px 20px; border: none; cursor: pointer;">Download Ticket</button>
 </div>
 
-<div id="ticketContent" style="text-align: center; margin: 0 auto;">
-  <h3>Admin Name ------------------</h3>
-  <h3>Signature -------------------</h3>
-  <h3>Date ------------------------</h3>
-  <h1 style="color: brown;"><b>Show Tickets Info</b></h1><br/>
+ <button onclick="downloadTicket()" style="background-color: #4CAF50;margin-left: 100px; padding: 10px 20px; border: none; cursor: pointer;">Download Ticket</button>
 
-  {% if routes %}
-    <p>From: {{ routes.0.depcity }} To: {{ routes.0.descity }} Date: {{ routes.0.date }}</p>
-  {% else %}
-    <p>No booked tickets available for this route.</p>
-  {% endif %}
+<button onclick="downloadTicket()" style="background-color: #4CAF50; margin-left: 100px; padding: 10px 20px; border: none; cursor: pointer;">
+    ⬇️
+</button>
 
-  <div style="border: 2px solid black; width: 80%; margin: auto; border-collapse: collapse;">
-    <table style="width: 100%; border-collapse: collapse;">
-      <thead style="background-color: white;">
-        <tr>
-          <th style="border: 1px solid black;"><b style="color: blue;">No.</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">First Name</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">Last Name</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">Phone</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">Departure</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">Destination</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">Travel Date</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">Seat Number</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">Price</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">Side No</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">Plate No</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">Check</b></th>
-        </tr>
-      </thead>
-      <tbody style="background-color: magenta;">
-        {% for route in routes %}
-        <tr>
-          <td style="background-color: green; border: 1px solid black;"><b style="color: yellow;">{{ loop.index }}</b></td>
-          <td style="border: 1px solid black;"><b style="color: green;">{{ route.firstname }}</b></td>
-          <td style="border: 1px solid black;"><b style="color: green;">{{ route.lastname }}</b></td>
-          <td style="border: 1px solid black;"><b style="color: green;">{{ route.phone }}</b></td>
-          <td style="border: 1px solid black;"><b style="color: green;">{{ route.depcity }}</b></td>
-          <td style="border: 1px solid black;"><b style="color: green;">{{ route.descity }}</b></td>
-          <td style="border: 1px solid black;"><b style="color: green;">{{ route.date }}</b></td>
-          <td style="border: 1px solid black;"><b style="color: green;">{{ route.no_seat }}</b></td>
-          <td style="border: 1px solid black;"><b style="color: green;">{{ route.price }}</b></td>
-          <td style="border: 1px solid black;"><b style="color: green;">{{ route.side_no }}</b></td>
-          <td style="border: 1px solid black;"><b style="color: green;">{{ route.plate_no }}</b></td>
-          <td style="border: 1px solid black;"><b style="color: green;"></b></td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-</div>
+<button onclick="downloadTicket()" style="background-color: #4CAF50; margin-left: 100px; padding: 10px 20px; border: none; cursor: pointer; font-size: 16px; color: white;">
+    ⬇️
+</button>
 
-<div id="ticketContent" style="text-align: center; margin: 0 auto;">
-  <h3>Admin Name ------------------</h3>
-  <h3>Signature -------------------</h3>
-  <h3>Date ------------------------</h3>
-  <h1 style="color: brown;"><b>Show Tickets Info</b></h1><br/>
-
-  {% if routes %}
-    <p>From: {{ routes.0.depcity }} To: {{ routes.0.descity }} Date: {{ routes.0.date }}</p>
-  {% else %}
-    <p>No booked tickets available for this route.</p>
-  {% endif %}
-
-  <div style="border: 2px solid black; width: 80%; margin: auto;">
-    <table style="width: 100%; border-collapse: collapse;">
-      <thead style="background-color: white;">
-        <tr>
-          <th style="border: 1px solid black;"><b style="color: blue;">No.</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">First Name</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">Last Name</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">Phone</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">Departure</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">Destination</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">Travel Date</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">Seat Number</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">Price</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">Side No</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">Plate No</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">Check</b></th>
-        </tr>
-      </thead>
-      <tbody style="background-color: magenta;">
-        {% for route in routes %}
-        <tr>
-          <td style="background-color: green; border: 1px solid black;">
-            <b style="color: yellow;">{{ loop.index }}</b>
-          </td>
-          <td style="border: 1px solid black;">
-            <b style="color: green;">{{ route.firstname }}</b>
-          </td>
-          <td style="border: 1px solid black;">
-            <b style="color: green;">{{ route.lastname }}</b>
-          </td>
-          <td style="border: 1px solid black;">
-            <b style="color: green;">{{ route.phone }}</b>
-          </td>
-          <td style="border: 1px solid black;">
-            <b style="color: green;">{{ route.depcity }}</b>
-          </td>
-          <td style="border: 1px solid black;">
-            <b style="color: green;">{{ route.descity }}</b>
-          </td>
-          <td style="border: 1px solid black;">
-            <b style="color: green;">{{ route.date }}</b>
-          </td>
-          <td style="border: 1px solid black;">
-            <b style="color: green;">{{ route.no_seat }}</b>
-          </td>
-          <td style="border: 1px solid black;">
-            <b style="color: green;">{{ route.price }}</b>
-          </td>
-          <td style="border: 1px solid black;">
-            <b style="color: green;">{{ route.side_no }}</b>
-          </td>
-          <td style="border: 1px solid black;">
-            <b style="color: green;">{{ route.plate_no }}</b>
-          </td>
-          <td style="border: 1px solid black;">
-            <b style="color: green;"></b>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-</div>
+<h5 style="margin: 0 auto; padding-left: 100px; display: block; color:blue;">Click Me</h5>
+<button onclick="downloadTicket()" style="background-color: #FF9800; margin-left: 100px; padding: 10px 20px; border: none; cursor: pointer; font-size: 16px; color: white;">
+    ⬇️
+</button>
 -->
-<div id="ticketContent" style="text-align: center; margin: 0 auto;">
-  <h3>Admin Name ------------------</h3>
-  <h3>Signature -------------------</h3>
-  <h3>Date ------------------------</h3>
-  <h1 style="color: brown;"><b>Show Tickets Info</b></h1><br/>
 
+
+
+
+<h5 style="margin: 0 auto; padding-left: 130px; display: block; color: blue;">Download Ticket</h5>
+<button onclick="downloadTicket()" style="background-color: #FF9800; margin-left: 150px; padding: 10px 20px; border: none; cursor: pointer; font-size: 16px; color: white;">
+    ⬇️
+</button>
+<div id="ticketContent" style="text-align: center; margin: 0 auto;">
   {% if routes %}
     <p>From: {{ routes.0.depcity }} To: {{ routes.0.descity }} Date: {{ routes.0.date }}</p>
   {% else %}
     <p>No booked tickets available for this route.</p>
   {% endif %}
 
-  <div style="border: 2px solid black; width: 80%; margin: auto;">
-    <table style="width: 100%; border-collapse: collapse;">
-      <thead style="background-color: white;">
-        <tr>
-          <th style="border: 1px solid black;"><b style="color: blue;">No.</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">First Name</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">Last Name</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">Phone</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">Departure</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">Destination</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">Travel Date</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">Seat Number</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">Price</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">Side No</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">Plate No</b></th>
-          <th style="border: 1px solid black;"><b style="color: blue;">Check</b></th>
-        </tr>
-      </thead>
-      <tbody style="background-color: magenta;">
-        {% for route in routes %}
-        <tr>
-          <td style="background-color: green; border: 1px solid black;">
-            <b style="color: yellow;">{{ loop.index }}</b>
-          </td>
-          <td style="border: 1px solid black;">
-            <b style="color: green;">{{ route.firstname }}</b>
-          </td>
-          <td style="border: 1px solid black;">
-            <b style="color: green;">{{ route.lastname }}</b>
-          </td>
-          <td style="border: 1px solid black;">
-            <b style="color: green;">{{ route.phone }}</b>
-          </td>
-          <td style="border: 1px solid black;">
-            <b style="color: green;">{{ route.depcity }}</b>
-          </td>
-          <td style="border: 1px solid black;">
-            <b style="color: green;">{{ route.descity }}</b>
-          </td>
-          <td style="border: 1px solid black;">
-            <b style="color: green;">{{ route.date }}</b>
-          </td>
-          <td style="border: 1px solid black;">
-            <b style="color: green;">{{ route.no_seat }}</b>
-          </td>
-          <td style="border: 1px solid black;">
-            <b style="color: green;">{{ route.price }}</b>
-          </td>
-          <td style="border: 1px solid black;">
-            <b style="color: green;">{{ route.side_no }}</b>
-          </td>
-          <td style="border: 1px solid black;">
-            <b style="color: green;">{{ route.plate_no }}</b>
-          </td>
-          <td style="border: 1px solid black;">
-            <b style="color: green;"></b>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+
+<h1 style="margin: 0 auto; padding-left: 20px; text-align: center; display: block; color:blue;">Booked Tickets</h1>
+<style>
+  body {
+    font-family: Arial, sans-serif; /* Set a default font */
+    margin: 0;
+    padding: 20px; /* Add padding around the body */
+    background-color: #f4f4f4; /* Light background for contrast */
+  }
+  h1 {
+    margin: 0; /* Remove margin from h1 */
+  }
+  table {
+    width: 100%; /* Use full width */
+    max-width: 600px; /* Set a max width for larger screens */
+    border-collapse: collapse; /* Ensure borders are collapsed */
+    margin: 10px auto; /* Center the table and add vertical margin */
+    background-color: #f9f9f9; /* Background color for the table */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  }
+
+  th, td {
+    border: 2px solid #007BFF; /* Border color */
+    padding: 8px; /* Padding for cells */
+    text-align: left; /* Align text to the left */
+    font-size: 14px; /* Font size */
+    word-wrap: break-word; /* Allow word wrapping */
+  }
+
+  th {
+    background-color: #e9ecef; /* Light gray background for header */
+  }
+
+  /* Responsive Styles */
+  @media (max-width: 767px) {
+ h1 {
+      margin: 0; /* Ensure no margin on small devices */
+    }
+    table {
+      margin-top: 0; /* Remove top margin for small devices */
+    }
+    th, td {
+      font-size: 12px; /* Smaller font size for mobile */
+      padding: 6px; /* Slightly less padding for mobile */
+    }
+  }
+</style>
+<table>
+  <thead>
+    <tr>
+	    <style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th {
+        background-color: #4CAF50; /* Green background */
+        color: white;              /* White text */
+        padding: 10px;            /* Padding for cells */
+        text-align: left;         /* Align text to the left */
+    }
+    th:first-child {
+        text-align: center;       /* Center align the first column */
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2; /* Zebra striping for rows */
+    }
+</style>
+      <th>No.</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Phone</th>
+      <th>Departure</th>
+      <th>Destination</th>
+      <th>Date</th>
+      <th>Seat No</th>
+      <th>Price</th>
+      <th>Side No</th>
+      <th>Plate No</th>
+      <th>Cheeck</th>
+    </tr>
+  </thead>
+  <tbody>
+ {% for rout in route %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ rout.firstname }}</td>
+        <td>{{ rout.lastname }}</td>
+        <td>{{ rout.phone }}</td>
+        <td>{{ rout.depcity}}</td>
+	<td>{{ rout.descity}}</td>
+	<td>{{ rout.date}}</td>
+	<td>{{ rout.no_seat}}</td>
+        <td>{{ rout.price }}</td>
+        <td>{{ rout.side_no }}</td>
+        <td>{{ rout.plate_no }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+
+
+
+
+
 </div>
-
-
 <script>
   function downloadTicket() {
     const ticketContent = document.getElementById("ticketContent").outerHTML;
@@ -497,9 +324,6 @@
                         <div class="row">
                                 <div class="col-lg-3 order-lg-1 order-2  ">
                                         <div class="copyright_content d-flex flex-row align-items-center">
-                                                <div><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-&copy;<script>document.write(new Date().getFullYear());</script> All rights reserved by <a href="#">Ticket Team</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></div>
                                         </div>
                                 </div>
                                 <div class="col-lg-9 order-lg-2 order-1">
@@ -530,9 +354,6 @@
                            <option value="{% url 'routedelete' %}">Delete Route</option>
                            </select>
                            <li class="footer_nav_item"><a href="{% url 'logout' %}" style="color:white;margin-left:50px;">Logout</a></li>
-                           <!--
-                           <li class="footer_nav_item"><a href="{% url 'changebus' %}" style="color:white;">Bus change</a></li>
-                           -->
                            <li class="footer_nav_item"><a href="{% url 'changebus' %}" style="color:white;">Bus change</a></li>
                             <li class="main_nav_item"><a href="{% url 'ticketinfo' %}">Booked Tickets</a></li>
                             <li class="main_nav_item"><a href="{% url 'changebus' %}">news</a></li>

@@ -443,7 +443,7 @@ ALLOWED_HOSTS = [
     'yourdomain.com',
 ]
 """
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
@@ -487,6 +487,18 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'myproje.wsgi.application'
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'mydatabase',        # Replace with your database name
+        'USER': 'myuser',            # Replace with your PostgreSQL username
+        'PASSWORD': 'mypassword',    # Replace with your PostgreSQL password
+        'HOST': 'localhost',          # Use 'localhost' for local development
+        'PORT': '5432',               # Default PostgreSQL port
+    }
+}
+"""
 
 DATABASES = {
     'default': {
@@ -494,6 +506,24 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',  # SQLite database file
     }
 }
+
+
+
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'my_database',              # Your database name
+        'USER': 'my_user',                  # Your PostgreSQL username
+        'PASSWORD': 'my_secure_password',    # Your PostgreSQL password
+        'HOST': 'localhost',                 # Typically 'localhost'
+        'PORT': '5432',                      # Default PostgreSQL port
+    }
+}
+"""
+
+
+
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'assets'
@@ -513,6 +543,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Addis_Ababa'
 USE_I18N = True
 USE_TZ = True

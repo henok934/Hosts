@@ -428,6 +428,10 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 """
 
+
+
+
+
 from pathlib import Path
 import os
 
@@ -488,12 +492,29 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'myproje.wsgi.application'
 
+
+
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',  # SQLite database file
     }
 }
+"""
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'mydatabase',        # Replace with your database name
+        'USER': 'myuser',            # Replace with your PostgreSQL username
+        'PASSWORD': 'mypassword',    # Replace with your PostgreSQL password
+        'HOST': 'localhost',          # Use 'localhost' for local development
+        'PORT': '5432',               # Default PostgreSQL port
+    }
+}
+
+
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'assets'

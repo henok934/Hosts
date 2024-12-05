@@ -40,6 +40,98 @@
 				</div>
 			</div>		
 		</div>
+
+		<nav class="main_nav">
+    <div class="container">
+        <div class="row">
+            <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start">
+                <div class="logo_container">
+                    <div class="logo">
+                        <a href="#">
+                            <img src="../static/images/logo.png" alt="">
+                            <span style="color: blue;">ticket</span>
+                        </a>
+                    </div>
+                </div>
+
+                <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+                <div class="container-fluid" style="background-color: #ffcccb; padding: 10px; border-radius: 5px;">
+                    <ul class="main_nav_list d-flex flex-row align-items-center" style="list-style-type: none; padding: 0; margin: 0; overflow-x: auto;">
+                        <li class="main_nav_item" style="margin-right: 20px;">
+                            <a href="{% url 'home' %}" style="color: blue; text-decoration: none;">home</a>
+                        </li>
+                        <li class="main_nav_item" style="margin-right: 10px;">
+                            <select onchange="location.href = this.value;" class="custom-select" style="min-width: 160px; color: #007BFF; background-color: #c8e6c9; border: 1px solid #388e3c; font-size: 14px;">
+                                <option value="#">Select for Register</option>
+                                <option value="{% url 'businsert' %}">Register Bus</option>
+                                <option value="{% url 'route' %}">Register Route</option>
+                                <option value="{% url 'registor' %}">Register Admin</option>
+                                <option value="{% url 'city' %}">Register City</option>
+                                <option value="{% url 'worker' %}">Register Driver</option>
+                            </select>
+                        </li>
+                        <li class="main_nav_item" style="margin-right: 10px;">
+                            <select onchange="location.href = this.value;" class="custom-select" style="min-width: 160px; color: #007BFF; background-color: #c8e6c9; border: 1px solid #388e3c; font-size: 14px;">
+                                <option value="#">Select for Update</option>
+                                <option value="{% url 'updatebus' %}">Update Side_no</option>
+                                <option value="{% url 'changebus' %}">Change Bus</option>
+                            </select>
+                        </li>
+                        <li class="main_nav_item" style="margin-right: 10px;">
+                            <select onchange="location.href = this.value;" class="custom-select" style="min-width: 160px; color: #007BFF; background-color: #c8e6c9; border: 1px solid #388e3c; font-size: 14px;">
+                                <option value="#">Select for Show</option>
+                                <option value="{% url 'routes' %}">Show Routes</option>
+                                <option value="{% url 'users' %}">Show Users</option>
+                                <option value="{% url 'buses' %}">Show Buses</option>
+                                <option value="{% url 'comments' %}">Show Comments</option>
+                                <option value="{% url 'driver' %}">Driver</option>
+                                <option value="{% url 'ticketinfo' %}">Booked Ticket</option>
+                            </select>
+                        </li>
+                        <li class="main_nav_item" style="margin-right: 10px;">
+                            <select onchange="location.href = this.value;" class="custom-select" style="min-width: 160px; color: #007BFF; background-color: #c8e6c9; border: 1px solid #388e3c; font-size: 14px;">
+                                <option value="#">Select for Delete</option>
+                                <option value="{% url 'admindelete' %}">Delete Admin</option>
+                                <option value="{% url 'commentdelete' %}">Delete Comment</option>
+                                <option value="{% url 'busdelete' %}">Delete Bus</option>
+                                <option value="{% url 'citydelete' %}">Delete City</option>
+                                <option value="{% url 'routedelete' %}">Delete Route</option>
+                                <option value="{% url 'workerdelete' %}">Delete Driver</option>
+                                <option value="{% url 'delete_ticket' %}">Delete Ticket</option>
+                            </select>
+                        </li>
+                        <li class="footer_nav_item" style="margin-left: 20px;">
+                            <a href="{% url 'logout' %}" style="color: blue; text-decoration: none;">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<style>
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .main_nav_list {
+            flex-wrap: nowrap; /* Ensure items stay in a single line */
+            overflow-x: auto; /* Allow horizontal scrolling */
+        }
+
+        .main_nav_item {
+            margin-right: 10px; /* Maintain margin for spacing */
+        }
+
+        /* Optional: Adjust logo size */
+        .logo img {
+            max-height: 50px; /* Keep logo height manageable */
+        }
+    }
+</style>
+
+
+
+		<!--
 		<nav class="main_nav">
 			<div class="container">
 				<div class="row">
@@ -53,10 +145,9 @@
                            <select onchange="location.href = this.value;">
                            <option value="#">Select for Register</option>
                            <option value="{% url 'businsert' %}">Register Bus</option>
-                           <option value="{% url 'route' %}">Register Routes</option>
-                           <option value="{% url 'admins' %}">Register Admin</option>
+                           <option value="{% url 'route' %}">Register Route</option>
+                           <option value="{% url 'registor' %}">Register Admin</option>
                            <option value="{% url 'city' %}">Register City</option>
-                           <option value="{% url 'admins' %}">Register Admin </option>
                            <option value="{% url 'worker' %}">Register Driver</option>
                            </select>
                           <select onchange="location.href = this.value;">
@@ -123,6 +214,9 @@
 				</div>
 			</div>	
 		</nav>
+		-->
+
+
 
 	</header>
 	<div class="menu trans_500">
@@ -134,10 +228,9 @@
                            <select onchange="location.href = this.value;">
                            <option value="#">Select for Register</option>
                            <option value="{% url 'businsert' %}">Register Bus</option>
-                           <option value="{% url 'route' %}">Register Routes</option>
-                           <option value="{% url 'admins' %}">Register Admin</option>
+                           <option value="{% url 'route' %}">Register Route</option>
+                           <option value="{% url 'registor' %}">Register Admin</option>
                            <option value="{% url 'city' %}">Register City</option>
-                           <option value="{% url 'admins' %}">Register Admin </option>
                            <option value="{% url 'worker' %}">Register Driver</option>
                            </select>
                           <select onchange="location.href = this.value;">
@@ -162,7 +255,7 @@
                            <option value="{% url 'citydelete' %}">Delete City</option>
                            <option value="{% url 'routedelete' %}">Delete Route</option>
                            <option value="{% url 'workerdelete' %}">Delete driver</option>
-    <option value="{% url 'delete_ticket' %}">Delete Ticket</option>
+    			   <option value="{% url 'delete_ticket' %}">Delete Ticket</option>
                            </select>
                            <li class="footer_nav_item"><a href="{% url 'logout' %}" style="color:white;margin-left:50px;">Logout</a></li>
 			</ul>
@@ -210,36 +303,125 @@
 {% endif %}
 									<div class="search_panel active">
 
-									<form action="ticketinfo" method="post" id="search_form_1" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">							
-									{% csrf_token %}
 
-										<div class="search_item">
-									<div><h1>From</h1></div>
-<select style="width: 200px;" name = "depcity" id="gender-input" class="check_in search_input" style="text-align: center;" required="Select Destination city." class="check_in search_input">
-    <option value="style=color: green; font-weight: bold;">Select Desparture</option>
-    {% if des %}
-        {% for depcity in des %}
-         <option value="{{ depcity.depcity }}" style="color: blue; font-weight: bold;%}">{{ depcity.depcity }}</option>
-        {% endfor %}
-    {% endif %}
-</select>
+
+
+<!--
+<form action="{% url 'ticketinfo' %}" method="post" id="search_form_1" class="search_panel_content d-flex flex-column align-items-center" style="background-color: #e9ecef; padding: 20px; border-radius: 5px; max-width: 600px; margin: auto;">
+    {% csrf_token %}
+
+    <div class="container mt-3" style="padding: 15px;">
+        <div class="row" style="background-color: white; padding: 25px; border-radius: 5px;">
+            <div class="col text-center">
+                <label style="font-size: 1rem; margin-bottom: 5px;">From</label>
+                <select name="depcity" id="depcity" class="form-select" style="width: 100%; height: 45px; background-color: #d1e7dd; color: black; font-size: 0.875rem;" required onchange="updateArrow('from-arrow', this)" onfocus="changeBackground(this)" onblur="resetBackground(this)">
+                    <option value="" style="color: green; font-weight: bold;">Select Departure</option>
+                    {% if des %}
+                        {% for depcity in des %}
+                            <option value="{{ depcity.depcity }}" style="color: blue; font-weight: bold;">{{ depcity.depcity }}</option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+                <span id="from-arrow" class="position-absolute" style="top: 50%; left: 100%; transform: translate(-50%, -50%); display: none; font-weight: bold; color: green;">➡</span>
+            </div>
+
+            <div class="col text-center">
+                <label style="font-size: 1rem; margin-bottom: 5px;">To</label>
+                <select name="descity" id="descity" class="form-select" style="width: 100%; height: 45px; background-color: #d1e7dd; color: black; font-size: 0.875rem;" required onchange="updateArrow('to-arrow', this)" onfocus="changeBackground(this)" onblur="resetBackground(this)">
+                    <option value="" style="color: green; font-weight: bold;">Select Destination</option>
+                    {% if des %}
+                        {% for depcity in des %}
+                            <option value="{{ depcity.depcity }}" style="color: blue; font-weight: bold;">{{ depcity.depcity }}</option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+
+ <span id="to-arrow" class="position-absolute" style="top: 50%; left: 100%; transform: translate(-50%, -50%); display: none; font-weight: bold; color: green;">➡</span>
+            </div>
+
+            <div class="col text-center">
+                <label style="font-size: 1rem; margin-bottom: 5px;">Date</label>
+                <input type="date" class="form-control" name="date" required style="width: 100%; height: 45px; text-align: center; background-color: #d1e7dd; color: black; font-size: 0.875rem;" onchange="changeDateBackground(this)" onfocus="changeBackground(this)" onblur="resetBackground(this)">
+            </div>
+        </div>
+
+        <div class="text-center mt-3">
+            <button type="submit" class="btn btn-primary" style="font-size: 0.875rem; padding: 10px 15px;">Search</button>
+        </div>
+    </div>
+</form>
+-->
+
+
+<div class="search_panel active" style="background-color: #E0F7FA;">
+            <form action="{% url 'ticketinfo' %}" method="post" id="search_form_1" class="search_panel_content d-flex flex-wrap align-items-center justify-content-start" style="margin: 20px auto; padding: 10px; width: 100%; max-width: 400px; background-color: #FFFFFF; auto;">
+        {% csrf_token %}
+<div style="display: flex; align-items: center; margin: 5px 0; margin-top:30px;">
+    <label for="depcity" style="color: #003366; font-weight: bold; margin-right: 10px; margin-left: 50px;"><b>From:</b></label>
+    <select name="depcity" id="depcity" class="form-control" style="width: 160px; height: 45px; color: brown; text-align: left; margin-left: 10px; color:brown;" required>
+        <option value="" style="color: green; font-weight: bold;">Select</option>
+        {% if des %}
+            {% for depcity in des %}
+                <option value="{{ depcity.depcity }}" style="color: blue; font-weight: bold;">{{ depcity.depcity }}</option>
+            {% endfor %}
+        {% endif %}
+    </select>
 </div>
-<div class="search_item">													<div><h1>TO</h1></div>
-					<select style="width: 200px; text-align: center; margin-right:400px;" name="descity" id="gender-input" class="check_in search_input" required="Select Destination city.">
-    <option value=" style="color: green; font-weight: bold;">Select Desparture</option>
-    {% if des %}
-        {% for depcity in des %}
-            <option value="{{ depcity.depcity }}" style="color: blue; font-weight: bold;">{{ depcity.depcity }}</option>
-        {% endfor %}
-    {% endif %}
-</select>
+
+<div style="display: flex; align-items: center; margin: 5px 0;margin-top:20px;">
+    <label for="descity" style="color: #003366; font-weight: bold; margin-right: 10px; margin-left:50px;"><b>To:</b></label>
+    <select name="descity" id="descity" class="form-control" style="width: 160px; height: 45px; margin-left:30px;color: brown; text-align: left; color:brown;" required>
+        <option value="" style="color: green; font-weight: bold;">Select</option>
+        {% if des %}
+            {% for depcity in des %}
+                <option value="{{ depcity.depcity }}" style="color: blue; font-weight: bold;">{{ depcity.depcity }}</option>
+            {% endfor %}
+        {% endif %}
+    </select>
+</div>
+</br>
+<div style="display: flex; align-items: center; margin: 5px 0; margin-top:20px;">
+    <label for="date" style="color: #003366; font-weight: bold; margin-right: 10px;margin-left:50px;"><b>Date:</b></label>
+    <input type="date" name="date" id="date" class="form-control" style="width: 160px; height: 45px; margin-left:15px;color: brown; text-align: left; color:brown;" required>
+</div>
+<div style="margin: 20px 0; text-align: center; display: block;">
+    <button type="submit" style="background-color: #4CAF50; color: #FFFFFF; width: 100px; height: 45px; border: none; text-align: center; margin-left:140px; color: yellow; margin-top:5px;">
+        Search
+    </button>
+</div>
+    </form>
+</div>
 
 
-					
 
-									</div>			<div class="search_item">				<div><h1>Date<h1></div>													<input type="date" class="check_out search_input" name="date" placeholder="date" required>												</div>
-			<button class="button search_button">cheeck</button>											</form>										</div>					
-										<!-- Search Panel -->
+<script>
+function changeBackground(element) {
+    element.style.backgroundColor = '#cfe2ff'; // Light blue on focus
+    element.style.color = 'black'; // Text color
+}
+
+function resetBackground(element) {
+    if (!element.value) {
+        element.style.backgroundColor = '#d1e7dd'; // Reset to light green if no selection
+    } else {
+        element.style.backgroundColor = '#cfe2ff'; // Keep light blue if selected
+    }
+}
+
+function changeDateBackground(element) {
+    element.style.backgroundColor = '#cfe2ff'; // Light blue when a date is selected
+    element.style.color = 'black'; // Text color
+}
+
+function updateArrow(arrowId, selectElement) {
+    const arrow = document.getElementById(arrowId);
+    if (selectElement.value) {
+        arrow.style.display = 'inline'; // Show arrow if a value is selected
+    } else {
+        arrow.style.display = 'none'; // Hide arrow if no value is selected
+    }
+}
+</script>										</div>									<!-- Search Panel -->
 									</div>
 								</div>
 							</div>		
@@ -440,10 +622,9 @@ div class="copyright">
                            <select onchange="location.href = this.value;">
                            <option value="#">Select for Register</option>
                            <option value="{% url 'businsert' %}">Register Bus</option>
-                           <option value="{% url 'route' %}">Register Routes</option>
-                           <option value="{% url 'admins' %}">Register Admin</option>
+                           <option value="{% url 'route' %}">Register Route</option>
+                           <option value="{% url 'registor' %}">Register Admin</option>
                            <option value="{% url 'city' %}">Register City</option>
-                           <option value="{% url 'admins' %}">Register Admin </option>
                            <option value="{% url 'worker' %}">Register Driver</option>
                            </select>
                           <select onchange="location.href = this.value;">

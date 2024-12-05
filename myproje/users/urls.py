@@ -30,8 +30,9 @@ urlpatterns = [
     path('city/city', views.city_view, name='city_view'),
     path('ticketinfo/', views.ticketinfo, name='ticketinfo'),
     path('ticketinfo/ticketinfo', views.ticketinfo, name='ticketinfo'),
+    path('admindelete/', views.admindelete, name='admindelete'),
     path('worker/worker', views.worker_view, name='worker'),
-    #path('changebus/changebus', views.changebus, name='changebus'),
+    path('changebus/changebus', views.changebus, name='changebus'),
     path('route/route', views.route, name='route'),
     path('routedelete/', views.routedelete, name='routedelete'),
     path('admins/', views.admins, name='admins'),
@@ -49,6 +50,7 @@ urlpatterns = [
     path('delete/', views.delete, name='delete'),
     path('routedelete/', views.routedelete, name='routedelete'),
     path('workerdelete/', views.workerdelete, name='workerdelete'),
+    path('workerdelete/workerdelete', views.workerdelete, name='workerdelete'),
     path('busdelete/', views.busdelete, name='busdelete'),
     path('delete_tickets/', views.delete_tickets, name='delete_tickets'),
     path('citydelete/', views.citydelete, name='citydelete'),
@@ -56,6 +58,6 @@ urlpatterns = [
     path('updatebus/', views.updatebus, name='updatebus'),
     path('changebus/', views.changebus, name='changebus'),
     path('changebuses/', views.changebuses, name='changebuses'),
-    path('changebus/changebus/', views.changebus, name='changebus')
-
+    path('changebus/changebus/', views.changebus_redirect)
+   # path('changebus/changebus/', views.changebus, name='changebus')
 ]

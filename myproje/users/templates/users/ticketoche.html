@@ -133,7 +133,8 @@
                         </ul>
                 </div>
         </div>
-	</br></br></br></br></br></br></br></br></br></br>
+	</br></br></br></br></br></br></br></br>
+<!--
 <div id="ticketContainer" style="background-color: #f1f1f1; padding: 10px;">
   <button onclick="downloadTicket()" style="background-color: #4CAF50;margin-left: 1050px; padding: 10px 20px; border: none; cursor: pointer;">Download Ticket</button>
 </div>
@@ -142,8 +143,8 @@
   <h3>Signature -------------------</h3>
   <h3>Date ------------------------</h3>
   <h1 style="margin-left:300px;color:brown;"><b>Show Tickets Info</b></h1><br />
-	{% if routes %}
-  <p>From: {{ routes.0.depcity }} To: {{ routes.0.descity }} Date: {{ routes.0.date }}</p>
+	{% if route %}
+  <p>From: {{ route.0.depcity }} To: {{ route.0.descity }} Date: {{ route.0.date }}</p>
 {% else %}
   <p>No booked tickets available for this route.</p>
 {% endif %}
@@ -166,19 +167,19 @@
       </tr>
     </thead>
     <tbody style="background-color: magenta;">
-      {% for route in routes %}
+      {% for rout in route %}
       <tr>
         <td style="background-color: green;"><h3><b style="color: yellow;">{{ loop.index }}</b></h3></td>
-        <td><p> <b style="color: green;">{{ route.firstname}} </b></p></td>
-        <td> <p> <b style="color: green;"> {{ route.lastname }} </b></p></td>
-        <td> <p> <b style="color: green;"> {{ route.phone }} </b></p></td>
-        <td> <p> <b style="color: green;">{{ route.depcity }} </b></p></td>
-        <td> <p> <b style="color: green;">{{ route.descity }} </b></p></td>
-        <td> <p> <b style="color: green;">{{ route.date }} </b></p></td>
-        <td> <p> <b style="color: green;">{{ route.no_seat }} </b></p></td>
-        <td> <p> <b style="color: green;">{{ route.price }} </b></p></td>
-        <td> <p> <b style="color: green;">{{ route.side_no }} </b></p></td>
-        <td> <p> <b style="color: green;">{{ route.plate_no }} </b></p></td>
+        <td><p> <b style="color: green;">{{ rout.firstname}} </b></p></td>
+        <td> <p> <b style="color: green;"> {{ rout.lastname }} </b></p></td>
+        <td> <p> <b style="color: green;"> {{ rout.phone }} </b></p></td>
+        <td> <p> <b style="color: green;">{{ rout.depcity }} </b></p></td>
+        <td> <p> <b style="color: green;">{{ rout.descity }} </b></p></td>
+        <td> <p> <b style="color: green;">{{ rout.date }} </b></p></td>
+        <td> <p> <b style="color: green;">{{ rout.no_seat }} </b></p></td>
+        <td> <p> <b style="color: green;">{{ rout.price }} </b></p></td>
+        <td> <p> <b style="color: green;">{{ rout.side_no }} </b></p></td>
+        <td> <p> <b style="color: green;">{{ rout.plate_no }} </b></p></td>
         <td> <p> <b style="color: green;"></b></p></td>
       </tr>
       {% endfor %}
@@ -196,7 +197,132 @@
     downloadLink.click();
   }
 </script>
+-->
 
+
+</br></br></br></br></br>
+<h5 style="margin: 0 auto; padding-left: 130px; display: block; color: blue;">Download Ticket</h5>
+<button onclick="downloadTicket()" style="background-color: #FF9800; margin-left: 150px; padding: 10px 20px; border: none; cursor: pointer; font-size: 16px; color: white;">
+    ⬇️
+</button>
+<div id="ticketContent" style="text-align: center; margin: 0 auto;">
+  {% if route %}
+    <p>From: {{ route.0.depcity }} To: {{ route.0.descity }} Date: {{ route.0.date }}</p>
+  {% else %}
+    <p>No booked tickets available for this route.</p>
+  {% endif %}
+
+
+<h1 style="margin: 0 auto; padding-left: 20px; text-align: center; display: block; color:blue;">Booked Tickets</h1>
+<style>
+  body {
+    font-family: Arial, sans-serif; /* Set a default font */
+    margin: 0;
+    padding: 20px; /* Add padding around the body */
+    background-color: #f4f4f4; /* Light background for contrast */
+  }
+  h1 {
+    margin: 0; /* Remove margin from h1 */
+  }
+  table {
+    width: 100%; /* Use full width */
+    max-width: 600px; /* Set a max width for larger screens */
+    border-collapse: collapse; /* Ensure borders are collapsed */
+    margin: 10px auto; /* Center the table and add vertical margin */
+    background-color: #f9f9f9; /* Background color for the table */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  }
+
+  th, td {
+ border: 2px solid #007BFF; /* Border color */
+    padding: 8px; /* Padding for cells */
+    text-align: left; /* Align text to the left */
+    font-size: 14px; /* Font size */
+    word-wrap: break-word; /* Allow word wrapping */
+  }
+
+  th {
+    background-color: #e9ecef; /* Light gray background for header */
+  }
+
+  /* Responsive Styles */
+  @media (max-width: 767px) {
+ h1 {
+      margin: 0; /* Ensure no margin on small devices */
+    }
+    table {
+      margin-top: 0; /* Remove top margin for small devices */
+    }
+    th, td {
+      font-size: 12px; /* Smaller font size for mobile */
+      padding: 6px; /* Slightly less padding for mobile */
+    }
+  }
+</style>
+<table>
+  <thead>
+    <tr>
+            <style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th {
+        background-color: #4CAF50; /* Green background */
+color: white;              /* White text */
+        padding: 10px;            /* Padding for cells */
+        text-align: left;         /* Align text to the left */
+    }
+    th:first-child {
+        text-align: center;       /* Center align the first column */
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2; /* Zebra striping for rows */
+    }
+</style>
+      <th>No.</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Phone</th>
+      <th>Departure</th>
+      <th>Destination</th>
+      <th>Date</th>
+      <th>Seat No</th>
+      <th>Price</th>
+      <th>Side No</th>
+      <th>Plate No</th>
+      <th>Cheeck</th>
+    </tr>
+  </thead>
+  <tbody>
+ {% for rout in route %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ rout.firstname }}</td>
+        <td>{{ rout.lastname }}</td>
+        <td>{{ rout.phone }}</td>
+        <td>{{ rout.depcity}}</td>
+        <td>{{ rout.descity}}</td>
+        <td>{{ rout.date}}</td>
+ <td>{{ rout.no_seat}}</td>
+        <td>{{ rout.price }}</td>
+        <td>{{ rout.side_no }}</td>
+        <td>{{ rout.plate_no }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+<script>
+  function downloadTicket() {
+    const ticketContent = document.getElementById("ticketContent").outerHTML;
+    const ticketBlob = new Blob([ticketContent], { type: "text/html" });
+    const downloadLink = document.createElement("a");
+    downloadLink.href = URL.createObjectURL(ticketBlob);
+    downloadLink.download = "ticket.html";
+    downloadLink.click();
+  }
+</script>
 
 </br></br></br</br></br>
   </br></br></br>
