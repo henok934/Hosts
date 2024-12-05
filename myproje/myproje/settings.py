@@ -391,6 +391,8 @@ DATABASES = {
     }
 }
 
+
+
 STATIC_ROOT = BASE_DIR/'assets'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
@@ -427,7 +429,19 @@ USE_TZ = True
 STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 """
+import os
+from pathlib import Path
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'your-default-secret-key')
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
+
+
+
+
+
+"""
 from pathlib import Path
 import os
 
@@ -437,13 +451,20 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'your-default-secret-key')
 
 DEBUG = True
 """
+
+
+
+"""
 ALLOWED_HOSTS = [
     'users.onrender.com',
     'www.yourdomain.com',
     'yourdomain.com',
 ]
 """
-ALLOWED_HOSTS = ['*']
+#ALLOWED_HOSTS = ['*']
+
+#ALLOWED_HOSTS = ['Ticket.glitch.me']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'ticket.glitch.me']
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
@@ -456,6 +477,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',  # Your app
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -487,18 +509,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'myproje.wsgi.application'
-"""
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mydatabase',        # Replace with your database name
-        'USER': 'myuser',            # Replace with your PostgreSQL username
-        'PASSWORD': 'mypassword',    # Replace with your PostgreSQL password
-        'HOST': 'localhost',          # Use 'localhost' for local development
-        'PORT': '5432',               # Default PostgreSQL port
-    }
-}
-"""
+
 
 DATABASES = {
     'default': {
